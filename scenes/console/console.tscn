@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://jtcmktftnh1x"]
+
+[ext_resource type="Script" path="res://scenes/console/console.gd" id="1_e58yu"]
+
+[sub_resource type="Animation" id="Animation_7r1lf"]
+resource_name = "slide_console"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nrcuk"]
+_data = {
+"slide_console": SubResource("Animation_7r1lf")
+}
+
+[node name="Console" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e58yu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+scroll_following = true
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/RichTextLabel"]
+modulate = Color(1, 1, 1, 0.113725)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nrcuk")
+}
+
+[connection signal="text_submitted" from="VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

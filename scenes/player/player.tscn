@@ -1,0 +1,187 @@
+[gd_scene load_steps=22 format=3 uid="uid://6ed75hht2eg2"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8fkf8"]
+[ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="1_mna6d"]
+[ext_resource type="Script" path="res://scenes/player/player_input.gd" id="2_j0yv7"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_s8cli"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sy1gy"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_so4wi"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x41mu"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8g83y"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ib1g"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8wg03"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8et0p"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_4dcbh"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_x41mu")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_8g83y")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_8ib1g")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_8wg03")
+blend_point_3/pos = Vector2(0, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_8et0p")
+blend_point_4/pos = Vector2(0, 0)
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_exmpv"]
+input_0/name = "walk"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "run"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xevgk"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d8dos"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r05b1"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ibcc3"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ydyn0"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_n6lt7"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_xevgk")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_d8dos")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_r05b1")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_ibcc3")
+blend_point_3/pos = Vector2(0, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_ydyn0")
+blend_point_4/pos = Vector2(0, 0)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_lltdd"]
+graph_offset = Vector2(-811.068, 39.2164)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_so4wi")
+nodes/TimeScale/position = Vector2(80, 120)
+nodes/run/node = SubResource("AnimationNodeBlendSpace2D_4dcbh")
+nodes/run/position = Vector2(-500, 280)
+nodes/state/node = SubResource("AnimationNodeTransition_exmpv")
+nodes/state/position = Vector2(-160, 120)
+nodes/walk/node = SubResource("AnimationNodeBlendSpace2D_n6lt7")
+nodes/walk/position = Vector2(-500, 80)
+node_connections = [&"TimeScale", 0, &"state", &"output", 0, &"TimeScale", &"state", 0, &"walk", &"state", 1, &"run"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_722in"]
+
+[node name="player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_8fkf8")
+
+[node name="server_synchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_s8cli")
+
+[node name="input_synchronizer" type="MultiplayerSynchronizer" parent="." node_paths=PackedStringArray("camera_base", "camera_rot", "camera_camera")]
+replication_config = SubResource("SceneReplicationConfig_s8cli")
+script = ExtResource("2_j0yv7")
+camera_base = NodePath("../camera_base")
+camera_rot = NodePath("../camera_base/camera_rot")
+camera_camera = NodePath("../camera_base/camera_rot/SpringArm3D/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.998934, 0)
+shape = SubResource("CapsuleShape3D_sy1gy")
+
+[node name="player_model" parent="." instance=ExtResource("1_mna6d")]
+
+[node name="Skeleton3D" parent="player_model/metarig" index="0"]
+bones/1/position = Vector3(0, 1.03525, -0.0565858)
+bones/1/rotation = Quaternion(0.12582, 0, 0, 0.992053)
+bones/3/rotation = Quaternion(-0.0774641, 0, 0, 0.996995)
+bones/5/rotation = Quaternion(0.201738, 0, 0, 0.97944)
+bones/5/scale = Vector3(1, 1, 1)
+bones/8/position = Vector3(0.0187594, 0.140666, 0.0802155)
+bones/8/rotation = Quaternion(-0.550206, -0.405936, -0.388096, 0.617957)
+bones/9/rotation = Quaternion(-0.361616, 0.598505, -0.597563, 0.392356)
+bones/10/rotation = Quaternion(0.0013857, -0.0681724, 0.0569785, 0.996044)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(0.00622383, 0.0324448, 0.023848, 0.99917)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/position = Vector3(-0.0187594, 0.140666, 0.0802155)
+bones/12/rotation = Quaternion(-0.550206, 0.405936, 0.388096, 0.617957)
+bones/13/rotation = Quaternion(-0.361616, -0.598505, 0.597563, 0.392356)
+bones/14/rotation = Quaternion(0.0013857, 0.0681724, -0.0569785, 0.996044)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.00622383, -0.0324448, -0.023848, 0.99917)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(-0.706399, 9.21847e-09, 0.0242675, 0.707398)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(-0.152455, -0.793331, -0.285504, 0.515627)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
+bones/18/scale = Vector3(1, 1, 1)
+bones/19/rotation = Quaternion(0.976795, -0.0480123, 0.00602098, 0.208638)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(0.369146, -0.0145343, -0.0638337, 0.927063)
+bones/21/rotation = Quaternion(-0.423181, 0.0505865, 0.0556255, 0.90292)
+bones/22/rotation = Quaternion(0.0632408, 0.814694, -0.576378, -0.00786175)
+bones/22/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(0.976795, 0.0480123, -0.00602098, 0.208638)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/rotation = Quaternion(0.369146, 0.0145343, 0.0638337, 0.927063)
+bones/26/rotation = Quaternion(-0.423181, -0.0505865, -0.0556255, 0.90292)
+bones/27/rotation = Quaternion(-0.0632408, 0.814694, -0.576378, 0.00786175)
+bones/27/scale = Vector3(1, 1, 1)
+bones/30/rotation = Quaternion(0.0142947, 2.13755e-09, -0.00411487, 0.999889)
+bones/30/scale = Vector3(1, 1, 1)
+bones/31/rotation = Quaternion(-0.0059518, -6.98988e-10, 6.20745e-05, 0.999982)
+bones/31/scale = Vector3(1, 1, 1)
+bones/32/rotation = Quaternion(0.0111595, -2.25455e-10, -0.000116388, 0.999938)
+bones/32/scale = Vector3(1, 1, 1)
+bones/33/rotation = Quaternion(-0.0220526, 9.24044e-10, 0.000229999, 0.999757)
+bones/34/rotation = Quaternion(0.0168457, -6.77329e-10, -0.000175693, 0.999858)
+bones/35/rotation = Quaternion(-5.4794e-08, 0.687939, 0.725769, -5.19379e-08)
+bones/36/rotation = Quaternion(5.4794e-08, 0.687939, 0.725769, 5.19379e-08)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../player_model")
+root_motion_track = NodePath("metarig/Skeleton3D:root_motion")
+tree_root = SubResource("AnimationNodeBlendTree_lltdd")
+anim_player = NodePath("../player_model/AnimationPlayer")
+parameters/TimeScale/scale = 1.0
+parameters/run/blend_position = Vector2(0, 0)
+parameters/state/current_state = "walk"
+parameters/state/transition_request = ""
+parameters/state/current_index = 0
+parameters/walk/blend_position = Vector2(0, 0)
+
+[node name="RootMotionView" type="RootMotionView" parent="."]
+animation_path = NodePath("../AnimationTree")
+
+[node name="camera_base" type="Node3D" parent="."]
+transform = Transform3D(-1, 2.51905e-08, 8.37149e-08, 0, 0.957586, -0.288146, -8.74228e-08, -0.288146, -0.957586, 0, 2.35859, 0)
+
+[node name="camera_rot" type="Node3D" parent="camera_base"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="camera_base/camera_rot"]
+shape = SubResource("SphereShape3D_722in")
+spring_length = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="camera_base/camera_rot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+
+[editable path="player_model"]

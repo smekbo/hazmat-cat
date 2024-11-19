@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://3cc4bfvoky5e"]
+
+[ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_d0g1p"]
+[ext_resource type="Texture2D" uid="uid://bodn4gvvsrver" path="res://assets/GreyboxTextures/greybox_light_grid.png" id="2_1pu1y"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
+
+[sub_resource type="Sky" id="Sky_vhbjw"]
+sky_material = SubResource("ProceduralSkyMaterial_gt2em")
+
+[sub_resource type="Environment" id="Environment_3qg3j"]
+background_mode = 2
+sky = SubResource("Sky_vhbjw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j1q6f"]
+albedo_texture = ExtResource("2_1pu1y")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xxl3h"]
+material = SubResource("StandardMaterial3D_j1q6f")
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_atyx5"]
+size = Vector2(30, 5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m8yuy"]
+radius = 0.047447
+height = 0.321814
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points")]
+script = ExtResource("1_d0g1p")
+spawn_points = NodePath("spawn_points")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3qg3j")
+
+[node name="spawn_points" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Marker3D" type="Marker3D" parent="spawn_points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0891476, 0, 5.33479)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_xxl3h")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.028, 0)
+
+[node name="PinJoint3D2" type="PinJoint3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.115961, 0, 0)
+node_b = NodePath("../RigidBody3D")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/RigidBody3D"]
+texture = SubResource("PlaceholderTexture2D_atyx5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/RigidBody3D"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_m8yuy")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.156034, 0, 0)
+node_a = NodePath("../RigidBody3D")
+node_b = NodePath("../RigidBody3D2")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.302918, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/RigidBody3D2"]
+texture = SubResource("PlaceholderTexture2D_atyx5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/RigidBody3D2"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_m8yuy")
