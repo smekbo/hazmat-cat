@@ -3,8 +3,8 @@ extends MultiplayerSynchronizer
 const CAMERA_CONTROLLER_ROTATION_SPEED := 3.0
 const CAMERA_MOUSE_ROTATION_SPEED := 0.002
 
-const CAMERA_X_ROT_MIN := deg_to_rad(-89.9)
-const CAMERA_X_ROT_MAX := deg_to_rad(70)
+const CAMERA_X_ROT_MIN := deg_to_rad(-45)
+const CAMERA_X_ROT_MAX := deg_to_rad(45)
 
 @export var motion := Vector2()
 
@@ -12,12 +12,17 @@ const CAMERA_X_ROT_MAX := deg_to_rad(70)
 @export var camera_rot : Node3D
 @export var camera_camera : Camera3D
 
+@onready var player: Player = $".."
+
+enum ANIMATIONS {WALK, RUN}
+@export var current_animation : ANIMATIONS
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		camera_camera.make_current()
-		#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		set_process(false)
 		set_process_input(false)
@@ -33,6 +38,12 @@ func _process(delta: float) -> void:
 			Input.get_action_strength("view_up") - Input.get_action_strength("view_down"))
 	var camera_speed_this_frame = delta * CAMERA_CONTROLLER_ROTATION_SPEED
 	rotate_camera(camera_move * camera_speed_this_frame)
+	
+	if Input.is_action_pressed("run"):
+		current_animation = ANIMATIONS.RUN
+	else:
+		current_animation = ANIMATIONS.WALK
+
 
 func _input(event):
 	# Make mouse aiming speed resolution-independent

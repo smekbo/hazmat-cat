@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 const DIRECTION_INTERPOLATE_SPEED = 1
 const MOTION_INTERPOLATE_SPEED = 10
@@ -35,6 +36,8 @@ func _ready():
 func _physics_process(delta: float):
 	if multiplayer.is_server():
 		apply_input(delta)
+	else:
+		animate(player_input.current_animation, delta)
 
 
 func apply_input(delta: float):
@@ -80,15 +83,10 @@ func apply_input(delta: float):
 	if transform.origin.y < -40:
 		transform.origin = initial_position
 
-	if Input.is_action_pressed("run"):
-		animate(ANIMATIONS.RUN, delta)
-	else:
-		animate(ANIMATIONS.WALK, delta)
+	animate(player_input.current_animation, delta)
 
 
-func animate(anim: int, delta:=0.0):
-	current_animation = anim
-
+func animate(anim: ANIMATIONS, _delta:=0.0):
 	match anim:
 		ANIMATIONS.WALK:
 			# Change state to walk.

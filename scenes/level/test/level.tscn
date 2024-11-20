@@ -1,9 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://3cc4bfvoky5e"]
+[gd_scene load_steps=15 format=3 uid="uid://3cc4bfvoky5e"]
 
 [ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_d0g1p"]
-[ext_resource type="Texture2D" uid="uid://bodn4gvvsrver" path="res://assets/GreyboxTextures/greybox_light_grid.png" id="2_1pu1y"]
+[ext_resource type="Script" path="res://scenes/level/spawnpoint.gd" id="2_jl6a0"]
+[ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="2_kh5rh"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="4_6x2ma"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_vhbjw"]
 sky_material = SubResource("ProceduralSkyMaterial_gt2em")
@@ -11,17 +17,7 @@ sky_material = SubResource("ProceduralSkyMaterial_gt2em")
 [sub_resource type="Environment" id="Environment_3qg3j"]
 background_mode = 2
 sky = SubResource("Sky_vhbjw")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j1q6f"]
-albedo_texture = ExtResource("2_1pu1y")
-uv1_scale = Vector3(100, 100, 100)
-
-[sub_resource type="BoxMesh" id="BoxMesh_xxl3h"]
-material = SubResource("StandardMaterial3D_j1q6f")
-size = Vector3(100, 0.5, 100)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
-size = Vector3(100, 0.5, 100)
+ambient_light_source = 3
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_atyx5"]
 size = Vector2(30, 5)
@@ -29,6 +25,21 @@ size = Vector2(30, 5)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m8yuy"]
 radius = 0.047447
 height = 0.321814
+
+[sub_resource type="BoxMesh" id="BoxMesh_py83q"]
+size = Vector3(20, 0.5, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dvk14"]
+size = Vector3(100, 0.5, 1000)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y55sc"]
+size = Vector3(100, 0.5, 1000)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qc5sv"]
+size = Vector3(1000, 0.5, 1000)
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_d0g1p")
@@ -38,20 +49,60 @@ spawn_points = NodePath("spawn_points")
 environment = SubResource("Environment_3qg3j")
 
 [node name="spawn_points" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.73332, 1, 9.88017)
 
 [node name="Marker3D" type="Marker3D" parent="spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0891476, 0, 5.33479)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.73662, 0, -37.8141)
+script = ExtResource("2_jl6a0")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-collision_mask = 2
+[node name="player_model" parent="spawn_points/Marker3D" instance=ExtResource("2_kh5rh")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_xxl3h")
-skeleton = NodePath("../..")
+[node name="TestBox" parent="spawn_points" instance=ExtResource("4_6x2ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82158, 0.450579, -29.5987)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_pgqr1")
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, -23.6345)
+light_energy = 20.0
+spot_range = 32.4476
+spot_angle = 49.1743
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, 45.9938)
+light_energy = 20.0
+spot_range = 32.4476
+spot_angle = 49.1743
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, 110.449)
+light_energy = 20.0
+spot_range = 32.4476
+spot_angle = 49.1743
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, 176.826)
+light_energy = 20.0
+spot_range = 32.4476
+spot_angle = 49.1743
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.157, 89.9466, 0)
+omni_range = 10.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 334.426, 89.9466, 0)
+omni_range = 10.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 624.03, 89.9466, 0)
+omni_range = 10.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 624.03, 89.9466, 0)
+omni_range = 10.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 918.23, 89.9466, 0)
+omni_range = 10.0
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.028, 0)
@@ -83,3 +134,97 @@ texture = SubResource("PlaceholderTexture2D_atyx5")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/RigidBody3D2"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_m8yuy")
+
+[node name="crappy_geo" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.8637, 0, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.6041, 0, 0)
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 43.4027, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D2"]
+mesh = SubResource("BoxMesh_dvk14")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D2"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 19.4835, -49.7556, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D3"]
+mesh = SubResource("BoxMesh_y55sc")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D3"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1024.21, 0, 2.48312e-06)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.6041, 0, 0)
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D5"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(4.37114e-08, -1, 8.74228e-08, -1, -4.37114e-08, 0, 3.82137e-15, -8.74228e-08, -1, 991.348, 43.4027, -3.89913e-07)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D6"]
+mesh = SubResource("BoxMesh_dvk14")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D6"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(4.37114e-08, -1, 8.74228e-08, -1, -4.37114e-08, 0, 3.82137e-15, -8.74228e-08, -1, 971.865, -49.7556, -2.09322e-06)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D7"]
+mesh = SubResource("BoxMesh_y55sc")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D7"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4253, 93.229, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 449.939, 0, 0)
+mesh = SubResource("BoxMesh_qc5sv")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D4"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4253, -96.1193, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/StaticBody3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 449.939, 0, 0)
+mesh = SubResource("BoxMesh_qc5sv")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/StaticBody3D8"]
+shape = SubResource("BoxShape3D_pgqr1")

@@ -1,0 +1,422 @@
+[gd_scene load_steps=11 format=3 uid="uid://cftc128awioxr"]
+
+[ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_phwbr"]
+[ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="2_ax7cb"]
+[ext_resource type="Script" path="res://scenes/level/spawnpoint.gd" id="2_eaojs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
+sky_top_color = Color(0.914054, 0.916946, 0.921514, 1)
+sky_horizon_color = Color(0.85171, 0.856579, 0.864269, 1)
+ground_bottom_color = Color(0.85171, 0.856579, 0.864269, 1)
+ground_horizon_color = Color(0.85171, 0.856579, 0.864269, 1)
+
+[sub_resource type="Sky" id="Sky_tnfue"]
+sky_material = SubResource("ProceduralSkyMaterial_gt2em")
+
+[sub_resource type="Environment" id="Environment_3qg3j"]
+background_mode = 2
+sky = SubResource("Sky_tnfue")
+ambient_light_source = 3
+fog_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_py83q"]
+size = Vector3(50, 5000, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
+size = Vector3(50, 1000, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qic13"]
+size = Vector3(10, 500, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7luan"]
+size = Vector3(10, 500, 50)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points")]
+script = ExtResource("1_phwbr")
+spawn_points = NodePath("spawn_points")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3qg3j")
+
+[node name="spawn_points" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="spawn_points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.9284, 0, -15.7159)
+script = ExtResource("2_eaojs")
+
+[node name="player_model" parent="spawn_points/Marker3D" instance=ExtResource("2_ax7cb")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 27.1952, 18.4544, -0.00653458)
+light_energy = 20.0
+spot_range = 32.4476
+spot_angle = 49.1743
+
+[node name="crappy_geo" type="Node3D" parent="."]
+
+[node name="tower" type="Node3D" parent="crappy_geo"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower2" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1000, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower2"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower2/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower2/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower2/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower2/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower7" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2001, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower7"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower7/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower7/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower7/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower7/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower8" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2001, 0, -1004)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower8"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower8/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower8/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower8/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower8/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower9" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3018.08, -6.3699, -17.0815)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower9"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower9/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower9/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower9/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower9/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower10" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3018.08, -6.3699, -1021.08)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower10"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower10/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower10/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower10/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower10/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower3" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -1000)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower3"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower3/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower3/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower3/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower3/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower6" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1006, 0, -1000)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower6"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower6/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower6/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower6/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower6/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower11" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2001, 0, 1031.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower11"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower11/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower11/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower11/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower11/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower12" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3018.08, -6.3699, 1014.42)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower12"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower12/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower12/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower12/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower12/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower13" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 1035.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower13"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower13/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower13/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower13/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower13/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower14" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1006, 0, 1035.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower14"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower14/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower14/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower14/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower14/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower15" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2001, 0, 1884.72)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower15"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower15/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower15/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower15/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower15/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower16" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3018.08, -6.3699, 1867.64)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower16"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower16/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower16/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower16/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower16/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower17" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 1888.72)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower17"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower17/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower17/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower17/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower17/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")
+
+[node name="tower18" type="Node3D" parent="crappy_geo"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1006, 0, 1888.72)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="crappy_geo/tower18"]
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower18/StaticBody3D"]
+mesh = SubResource("BoxMesh_py83q")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower18/StaticBody3D"]
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="crappy_geo/tower18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -250, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/tower18/StaticBody3D2"]
+mesh = SubResource("BoxMesh_qic13")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/tower18/StaticBody3D2"]
+shape = SubResource("BoxShape3D_7luan")

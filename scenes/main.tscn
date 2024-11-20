@@ -1,12 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8i7o0dq2usmn"]
+[gd_scene load_steps=4 format=3 uid="uid://c8i7o0dq2usmn"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jvfgf"]
+[ext_resource type="PackedScene" uid="uid://jtcmktftnh1x" path="res://scenes/console/console.tscn" id="2_8p6ly"]
+[ext_resource type="Script" path="res://scenes/lobby.gd" id="2_f03fd"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_jvfgf")
 
+[node name="Console" parent="." instance=ExtResource("2_8p6ly")]
+
 [node name="Players" type="Node" parent="."]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="Lobby" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
 spawn_path = NodePath("../Players")
+script = ExtResource("2_f03fd")

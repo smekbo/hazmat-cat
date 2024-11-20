@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://nxn7djfuha0p"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2ulp7"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_so1aq"]
+radius = 0.25
+height = 1.0
+
+[node name="StapleGun" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2ulp7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_so1aq")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(100, 0, 0)
