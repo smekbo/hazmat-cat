@@ -1,4 +1,5 @@
 extends MultiplayerSynchronizer
+class_name PlayerInput
 
 const CAMERA_CONTROLLER_ROTATION_SPEED := 3.0
 const CAMERA_MOUSE_ROTATION_SPEED := 0.002
@@ -11,18 +12,23 @@ const CAMERA_X_ROT_MAX := deg_to_rad(45)
 @export var camera_base : Node3D
 @export var camera_rot : Node3D
 @export var camera_camera : Camera3D
+@export var interact_ray : RayCast3D
 
 @onready var player: Player = $".."
 
-enum ANIMATIONS {WALK, RUN}
-@export var current_animation : ANIMATIONS
+enum MOVEMENT_STATES {WALK, RUN, JUMP, FALL}
+enum INTERACTION_STATES {CARRYING, THROWING, EMPTY}
+@export var movement_state : MOVEMENT_STATES = MOVEMENT_STATES.WALK
+@export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY
+
+var held_object: GrabbableObject
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Only run process and input if it's the actual player
 	if get_multiplayer_authority() == multiplayer.get_unique_id():
 		camera_camera.make_current()
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		set_process(false)
 		set_process_input(false)
@@ -40,9 +46,21 @@ func _process(delta: float) -> void:
 	rotate_camera(camera_move * camera_speed_this_frame)
 	
 	if Input.is_action_pressed("run"):
-		current_animation = ANIMATIONS.RUN
+		movement_state = MOVEMENT_STATES.RUN
 	else:
-		current_animation = ANIMATIONS.WALK
+		movement_state = MOVEMENT_STATES.WALK
+
+	if Input.is_action_just_pressed("interact"):
+		match interaction_state:
+			INTERACTION_STATES.CARRYING:
+				held_object.thrown()
+				held_object = null
+				interaction_state = INTERACTION_STATES.EMPTY
+			INTERACTION_STATES.EMPTY:
+				if interact_ray.is_colliding():
+					held_object = interact_ray.get_collider()
+					held_object.grabbed(player)
+					interaction_state = INTERACTION_STATES.CARRYING
 
 
 func _input(event):

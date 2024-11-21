@@ -10,9 +10,11 @@ var root_motion = Transform3D()
 var motion = Vector2()
 
 @onready var initial_position = transform.origin
-@onready var player_input = $input_synchronizer
+@onready var player_input: PlayerInput = $input_synchronizer
 @onready var animation_tree = $AnimationTree
 @onready var player_model = $player_model
+@onready var carry_point = $carry_point
+@onready var tool_point = $tool_point
 
 @onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
@@ -37,8 +39,7 @@ func _physics_process(delta: float):
 	if multiplayer.is_server():
 		apply_input(delta)
 	else:
-		animate(player_input.current_animation, delta)
-
+		animate(player_input.movement_state, player_input.interaction_state, delta)
 
 func apply_input(delta: float):
 	motion = motion.lerp(player_input.motion, MOTION_INTERPOLATE_SPEED * delta)
@@ -83,16 +84,22 @@ func apply_input(delta: float):
 	if transform.origin.y < -40:
 		transform.origin = initial_position
 
-	animate(player_input.current_animation, delta)
+	animate(player_input.movement_state, player_input.interaction_state, delta)
 
 
-func animate(anim: ANIMATIONS, _delta:=0.0):
-	match anim:
-		ANIMATIONS.WALK:
+func animate(movement, interaction, _delta:=0.0):
+	match movement:
+		PlayerInput.MOVEMENT_STATES.WALK:
 			# Change state to walk.
 			animation_tree["parameters/state/transition_request"] = "walk"
 			# Blend position for walk speed based checked motion.
 			animation_tree["parameters/walk/blend_position"] = Vector2(motion.length(), 0)
-		ANIMATIONS.RUN:
+		PlayerInput.MOVEMENT_STATES.RUN:
 			animation_tree["parameters/state/transition_request"] = "run"
 			animation_tree["parameters/run/blend_position"] = Vector2(motion.length(), 0)
+	
+	match interaction:
+		PlayerInput.INTERACTION_STATES.CARRYING:
+			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 1.0, 1)
+		PlayerInput.INTERACTION_STATES.EMPTY:
+			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 0.0, 1)

@@ -48,6 +48,9 @@ spawn_points = NodePath("spawn_points")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3qg3j")
 
+[node name="TestBox" parent="." instance=ExtResource("4_6x2ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9881, 1.45058, -25.0477)
+
 [node name="spawn_points" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.73332, 1, 9.88017)
 
@@ -56,9 +59,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.73662, 0, -37.8141)
 script = ExtResource("2_jl6a0")
 
 [node name="player_model" parent="spawn_points/Marker3D" instance=ExtResource("2_kh5rh")]
-
-[node name="TestBox" parent="spawn_points" instance=ExtResource("4_6x2ma")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82158, 0.450579, -29.5987)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, -23.6345)

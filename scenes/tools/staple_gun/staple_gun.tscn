@@ -1,4 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://nxn7djfuha0p"]
+[gd_scene load_steps=5 format=3 uid="uid://nxn7djfuha0p"]
+
+[ext_resource type="Script" path="res://scenes/tools/staple_gun/staple_gun.gd" id="1_blq4f"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lkxvr"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_2ulp7"]
 radius = 0.25
@@ -8,7 +12,15 @@ height = 1.0
 radius = 0.25
 height = 1.0
 
-[node name="StapleGun" type="RigidBody3D"]
+[node name="StapleGun" type="RigidBody3D" node_paths=PackedStringArray("multiplayer_synchronizer")]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_blq4f")
+type = 1
+multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lkxvr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
