@@ -1,0 +1,191 @@
+[gd_scene load_steps=20 format=3 uid="uid://1im05dfohkw3"]
+
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_ihiox"]
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="2_wwolx"]
+[ext_resource type="PackedScene" uid="uid://cg5dlgkkxctxq" path="res://scenes/level/test_gen/level_parts/small_wall.tscn" id="3_vn1gg"]
+[ext_resource type="PackedScene" uid="uid://deobaefh6vddj" path="res://scenes/level/test_gen/level_parts/doorway.tscn" id="4_ftp7o"]
+[ext_resource type="PackedScene" uid="uid://b3clgk03qkvtp" path="res://scenes/level/test_gen/level_parts/large_wall.tscn" id="5_rt8h7"]
+[ext_resource type="Texture2D" uid="uid://dfv7bgjavb1cr" path="res://assets/textures/imgonline-com-ua-TextureSeamless-RHe6lK4v8yoI.jpg" id="5_yemsa"]
+[ext_resource type="PackedScene" uid="uid://dipeikf2cbopx" path="res://scenes/level/test_gen/level_parts/small_floor.tscn" id="6_u0nwg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3row"]
+albedo_color = Color(0.509417, 1, 0.1965, 1)
+emission_enabled = true
+emission = Color(0.492522, 0.838383, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_23drc"]
+material = SubResource("StandardMaterial3D_w3row")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6a4s"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_241c2"]
+material = SubResource("StandardMaterial3D_t6a4s")
+size = Vector2(4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hmnv"]
+albedo_color = Color(0.733139, 0.771982, 0.405798, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fween"]
+material = SubResource("StandardMaterial3D_2hmnv")
+size = Vector3(20, 0.5, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
+size = Vector3(15.9582, 0.530762, 16.3111)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6ba8"]
+albedo_color = Color(0.824507, 0.758258, 0.520432, 1)
+albedo_texture = ExtResource("5_yemsa")
+uv1_scale = Vector3(6, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pv6a6"]
+material = SubResource("StandardMaterial3D_k6ba8")
+size = Vector3(50, 8, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oycx7"]
+albedo_color = Color(0.678944, 0.678944, 0.678944, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0dkho"]
+material = SubResource("StandardMaterial3D_oycx7")
+size = Vector3(50, 0.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g3bxi"]
+size = Vector3(50, 8.5, 1)
+
+[node name="Room" type="Node3D" node_paths=PackedStringArray("ceiling", "connectors")]
+script = ExtResource("1_ihiox")
+ceiling = NodePath("geo/ceiling")
+connectors = NodePath("connectors")
+
+[node name="connectors" type="Node3D" parent="."]
+
+[node name="connector" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0390399, 0.253453, 35.0224)
+script = ExtResource("2_wwolx")
+
+[node name="direction" type="Marker3D" parent="connectors/connector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector/direction"]
+mesh = SubResource("SphereMesh_23drc")
+
+[node name="connector2" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19434, 0.287927, -25.0549)
+script = ExtResource("2_wwolx")
+
+[node name="direction" type="Marker3D" parent="connectors/connector2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
+mesh = SubResource("SphereMesh_23drc")
+
+[node name="light_cluster2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 8.21602, 8.95677)
+
+[node name="light" type="MeshInstance3D" parent="light_cluster2"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.2779, 0, -26.5484)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light2" type="MeshInstance3D" parent="light_cluster2"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.1954, 0, -14.7097)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light2"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light3" type="MeshInstance3D" parent="light_cluster2"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.3384, 0, -2.4884)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light3"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light4" type="MeshInstance3D" parent="light_cluster2"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.3384, 0, 7.8694)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light4"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light5" type="MeshInstance3D" parent="light_cluster2"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.1954, 0, 17.9018)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light5"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="geo" type="Node3D" parent="."]
+
+[node name="ceiling" type="Node3D" parent="geo"]
+visible = false
+
+[node name="ceiling" type="StaticBody3D" parent="geo/ceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.68241, 0)
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="geo/ceiling/ceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.0655)
+mesh = SubResource("BoxMesh_fween")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/ceiling/ceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01651, 0, 4.92633)
+shape = SubResource("BoxShape3D_pgqr1")
+
+[node name="small_wall4" parent="geo" instance=ExtResource("3_vn1gg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36591, 4.43716, -24.5598)
+
+[node name="doorway" parent="geo" instance=ExtResource("4_ftp7o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.62155, 6.93809, -24.5636)
+
+[node name="small_wall6" parent="geo" instance=ExtResource("3_vn1gg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9.87183, 4.43716, 34.6664)
+
+[node name="small_wall8" parent="geo" instance=ExtResource("3_vn1gg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.62547, 4.43716, 27.6202)
+
+[node name="small_wall9" parent="geo" instance=ExtResource("3_vn1gg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.60164, 4.43716, 27.0781)
+
+[node name="small_wall7" parent="geo" instance=ExtResource("3_vn1gg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.0697, 4.43716, 34.6072)
+
+[node name="doorway2" parent="geo" instance=ExtResource("4_ftp7o")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0380597, 6.93809, 34.576)
+
+[node name="large_wall2" type="StaticBody3D" parent="geo"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.58138, 4.43716, -0.0187049)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="geo/large_wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_pv6a6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/large_wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+mesh = SubResource("BoxMesh_0dkho")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/large_wall2"]
+shape = SubResource("BoxShape3D_g3bxi")
+
+[node name="large_wall4" parent="geo" instance=ExtResource("5_rt8h7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.57598, 4.43716, -0.0187049)
+
+[node name="small_floor" parent="geo" instance=ExtResource("6_u0nwg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="small_floor3" parent="geo" instance=ExtResource("6_u0nwg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)

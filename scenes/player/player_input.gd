@@ -22,7 +22,7 @@ enum INTERACTION_STATES {CARRYING, THROWING, EMPTY}
 @export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY
 
 var held_object: GrabbableObject
-
+var throw_strength: float = 0
 
 func _ready() -> void:
 	# Only run process and input if it's the actual player
@@ -59,9 +59,13 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		match interaction_state:
 			INTERACTION_STATES.CARRYING:
-				held_object.thrown()
-				held_object = null
-				interaction_state = INTERACTION_STATES.EMPTY
+				if Input.is_action_pressed("interact"):
+					throw_strength += delta
+				else:
+					var throw_direction = player.global_position.direction_to(player.camera_look_point).normalized()
+					held_object.throw(throw_direction, throw_strength)
+					held_object = null
+					interaction_state = INTERACTION_STATES.EMPTY
 			INTERACTION_STATES.EMPTY:
 				if interact_ray.is_colliding():
 					held_object = interact_ray.get_collider()
