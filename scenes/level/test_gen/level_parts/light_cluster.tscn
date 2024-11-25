@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq3xgo63wnx0c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6a4s"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_241c2"]
+material = SubResource("StandardMaterial3D_t6a4s")
+size = Vector2(4, 2)
+
+[node name="light_cluster" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="light" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 8, 0, 8)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light2"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -8, 0, 8)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light3"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -8, 0, -8)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light4"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 8, 0, -8)
+mesh = SubResource("PlaneMesh_241c2")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="light5"]
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0

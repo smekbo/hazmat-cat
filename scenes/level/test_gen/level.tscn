@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://8sdficf8mwub"]
+
+[ext_resource type="Script" path="res://scenes/level/test_gen/level.gd" id="1_u6enb"]
+[ext_resource type="PackedScene" uid="uid://5327hb60j0u" path="res://scenes/level/test_gen/level_rooms/1.tscn" id="2_dalg3"]
+[ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="2_nd5ma"]
+[ext_resource type="PackedScene" uid="uid://dbeopwkqpc3mr" path="res://scenes/level/test_gen/level_rooms/2.tscn" id="3_lkhf1"]
+[ext_resource type="PackedScene" uid="uid://8fny6nh0u5ur" path="res://scenes/level/test_gen/level_rooms/3.tscn" id="4_xrew8"]
+[ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/tools/staple_gun/staple_gun.tscn" id="6_pph6u"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="7_u6ru3"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0mj00"]
+properties/0/path = NodePath(".:room_id_list")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:room_transform_list")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_vhbjw"]
+sky_material = SubResource("ProceduralSkyMaterial_gt2em")
+
+[sub_resource type="Environment" id="Environment_3qg3j"]
+background_energy_multiplier = 1.42
+sky = SubResource("Sky_vhbjw")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("rooms", "spawn_points", "objects", "object_spawner")]
+script = ExtResource("1_u6enb")
+room_list = Array[PackedScene]([ExtResource("2_dalg3"), ExtResource("3_lkhf1"), ExtResource("4_xrew8")])
+level_depth = 5
+rooms = NodePath("rooms")
+spawn_points = NodePath("spawn_points")
+objects = NodePath("objects")
+object_spawner = NodePath("objectSpawner")
+
+[node name="levelSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0mj00")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3qg3j")
+
+[node name="spawn_points" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Marker3D" parent="spawn_points" instance=ExtResource("2_nd5ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.48105, 0, -5.02228)
+
+[node name="Marker3D2" parent="spawn_points" instance=ExtResource("2_nd5ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.76396, 0, -5.16344)
+
+[node name="Marker3D3" parent="spawn_points" instance=ExtResource("2_nd5ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08338, 0, -2.34748)
+
+[node name="Marker3D4" parent="spawn_points" instance=ExtResource("2_nd5ma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.07761, 0, -2.46187)
+
+[node name="objects" type="Node" parent="."]
+
+[node name="StapleGun" parent="objects" instance=ExtResource("6_pph6u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.620292, 0)
+
+[node name="TestBox" parent="objects" instance=ExtResource("7_u6ru3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.76495, 0.842955, -5.74172)
+
+[node name="objectSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/tools/staple_gun/staple.tscn")
+spawn_path = NodePath("../objects")
+
+[node name="rooms" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 100.134, 124.474)

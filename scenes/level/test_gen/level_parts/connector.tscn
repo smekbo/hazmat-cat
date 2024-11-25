@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://l2hkc107txvk"]
+
+[node name="connector" type="Marker3D"]
+
+[node name="direction" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

@@ -50,6 +50,12 @@ func _process(delta: float) -> void:
 	else:
 		movement_state = MOVEMENT_STATES.WALK
 
+	if player.airborne:
+		if player.is_on_floor():
+			movement_state = MOVEMENT_STATES.WALK
+	if Input.is_action_just_pressed("jump"):
+		movement_state = MOVEMENT_STATES.JUMP
+
 	if Input.is_action_just_pressed("interact"):
 		match interaction_state:
 			INTERACTION_STATES.CARRYING:

@@ -5,6 +5,9 @@ const DIRECTION_INTERPOLATE_SPEED = 1
 const MOTION_INTERPOLATE_SPEED = 10
 const ROTATION_INTERPOLATE_SPEED = 10
 
+const JUMP_SPEED = 6
+var airborne := false
+
 var orientation = Transform3D()
 var root_motion = Transform3D()
 var motion = Vector2()
@@ -13,8 +16,10 @@ var motion = Vector2()
 @onready var player_input: PlayerInput = $input_synchronizer
 @onready var animation_tree = $AnimationTree
 @onready var player_model = $player_model
-@onready var carry_point = $carry_point
-@onready var tool_point = $tool_point
+
+@export var carry_point: Node3D
+@export var tool_point: Node3D
+@export var camera_look_point: Node3D
 
 @onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
@@ -52,7 +57,6 @@ func apply_input(delta: float):
 	camera_x.y = 0
 	camera_x = camera_x.normalized()
 
-
 	# Convert orientation to quaternions for interpolating rotation.
 	var target = camera_x * motion.x + camera_z * motion.y
 	if target.length() > 0.001:
@@ -83,6 +87,12 @@ func apply_input(delta: float):
 	# If we're below -40, respawn (teleport to the initial position).
 	if transform.origin.y < -40:
 		transform.origin = initial_position
+
+	if is_on_floor():
+		airborne = false
+	if player_input.movement_state == player_input.MOVEMENT_STATES.JUMP and not airborne:
+		velocity.y += JUMP_SPEED
+		airborne = true
 
 	animate(player_input.movement_state, player_input.interaction_state, delta)
 

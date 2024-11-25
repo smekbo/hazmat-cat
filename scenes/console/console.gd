@@ -6,8 +6,12 @@ var open = false
 @onready var console_output : RichTextLabel = $VBoxContainer/RichTextLabel
 @onready var console_input : LineEdit = $VBoxContainer/LineEdit
 
-@onready var main: Main = $".."
-@onready var lobby: Lobby = $"../Lobby"
+# @onready var main: Main = $".."
+# @onready var lobby: Lobby = $"../Lobby"
+
+@onready var main: Main
+@onready var lobby: Lobby
+@onready var level: Level
 
 var level_path = "res://scenes/level/%s/level.tscn"
 
@@ -20,6 +24,9 @@ func _ready() -> void:
 	
 	multiplayer.peer_connected.connect(Callable(self, "write"))
 	multiplayer.peer_disconnected.connect(Callable(self, "write"))
+
+	get_child(0)
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("toggle_console"):
@@ -50,6 +57,8 @@ func _on_console_submit(text: String) -> void:
 	
 	var output
 	match command:
+		"lvlst":
+			write(level.print_stats())
 		"peers":
 			write(multiplayer.get_peers())
 		"host":

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d25ustubecb51"]
+
+[ext_resource type="Script" path="res://scenes/level/spawnpoint.gd" id="1_774f0"]
+[ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="2_vta3d"]
+
+[node name="Marker3D" type="Marker3D"]
+script = ExtResource("1_774f0")
+
+[node name="player_model" parent="." instance=ExtResource("2_vta3d")]

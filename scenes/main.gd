@@ -1,7 +1,7 @@
 extends Node
 class_name Main
 
-@export var current_level: NodePath = "res://scenes/level/test_br/level.tscn"
+@export var current_level: NodePath = "res://scenes/level/test_gen/level.tscn"
 
 @onready var player_scene: PackedScene = load("res://scenes/player/player.tscn")
 @onready var players: Node = $Players
@@ -11,6 +11,7 @@ var level : Level
 
 
 func _ready() -> void:
+	Console.main = self
 	load_level(current_level)
 
 
@@ -42,6 +43,3 @@ func load_level(path: String):
 	add_child(node)
 	current_level = path
 	return "level loaded %s" % path
-
-func change_level(path: String):
-	pass

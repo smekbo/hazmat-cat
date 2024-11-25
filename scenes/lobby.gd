@@ -9,6 +9,7 @@ var peer : MultiplayerPeer = OfflineMultiplayerPeer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Console.lobby = self
 	#host_game()
 	multiplayer.peer_connected.connect(on_client_connected)
 	multiplayer.peer_disconnected.connect(del_player)
@@ -34,7 +35,6 @@ func on_client_connected(id):
 
 @rpc
 func add_player(id: int):
-	print("ADDING PLAYER %s to %s" % [id, multiplayer.get_unique_id()])
 	var spawn_point = main.level.spawn_points.get_child(randi() % main.level.spawn_points.get_child_count())
 	var player = main.player_scene.instantiate()
 	player.name = str(id)

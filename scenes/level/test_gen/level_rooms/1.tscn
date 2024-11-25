@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3 uid="uid://5327hb60j0u"]
+
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_kolkk"]
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="3_mceb7"]
+[ext_resource type="PackedScene" uid="uid://dq3xgo63wnx0c" path="res://scenes/level/test_gen/level_parts/light_cluster.tscn" id="4_ajn30"]
+[ext_resource type="PackedScene" uid="uid://sic88jii63rr" path="res://scenes/level/test_gen/level_parts/large_floor.tscn" id="5_ankwt"]
+[ext_resource type="PackedScene" uid="uid://cg5dlgkkxctxq" path="res://scenes/level/test_gen/level_parts/small_wall.tscn" id="6_6eav2"]
+[ext_resource type="PackedScene" uid="uid://deobaefh6vddj" path="res://scenes/level/test_gen/level_parts/doorway.tscn" id="7_14lk2"]
+[ext_resource type="PackedScene" uid="uid://b3clgk03qkvtp" path="res://scenes/level/test_gen/level_parts/large_wall.tscn" id="8_6bgty"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3row"]
+albedo_color = Color(0.509417, 1, 0.1965, 1)
+emission_enabled = true
+emission = Color(0.492522, 0.838383, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_coktl"]
+material = SubResource("StandardMaterial3D_w3row")
+
+[node name="Room" type="Node3D" node_paths=PackedStringArray("ceiling", "connectors")]
+script = ExtResource("1_kolkk")
+ceiling = NodePath("geo/ceiling")
+connectors = NodePath("connectors")
+
+[node name="connectors" type="Node3D" parent="."]
+
+[node name="connector" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.49619, 0.253453, 25.005)
+script = ExtResource("3_mceb7")
+
+[node name="direction" type="Marker3D" parent="connectors/connector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector/direction"]
+mesh = SubResource("SphereMesh_coktl")
+
+[node name="connector2" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.61984, 0.287927, -25.0549)
+script = ExtResource("3_mceb7")
+
+[node name="direction" type="Marker3D" parent="connectors/connector2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
+mesh = SubResource("SphereMesh_coktl")
+
+[node name="light_cluster" parent="." instance=ExtResource("4_ajn30")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4842, 8.21602, -7.65811)
+
+[node name="light_cluster2" parent="." instance=ExtResource("4_ajn30")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 8.21602, 8.95677)
+
+[node name="geo" type="Node3D" parent="."]
+
+[node name="ceiling" type="Node3D" parent="geo"]
+visible = false
+
+[node name="ceiling" parent="geo/ceiling" instance=ExtResource("5_ankwt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.68241, 0)
+
+[node name="large_floor" parent="geo" instance=ExtResource("5_ankwt")]
+
+[node name="small_wall2" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5655, 4.43716, -24.5598)
+
+[node name="small_wall3" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3073, 4.43716, -24.5598)
+
+[node name="small_wall4" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36591, 4.43716, -24.5598)
+
+[node name="doorway" parent="geo" instance=ExtResource("7_14lk2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.62155, 6.93809, -24.5636)
+
+[node name="small_wall5" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -17.3982, 4.43716, 24.4666)
+
+[node name="small_wall6" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 17.4108, 4.43716, 24.4666)
+
+[node name="small_wall7" parent="geo" instance=ExtResource("6_6eav2")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.49369, 4.43716, 24.4666)
+
+[node name="doorway2" parent="geo" instance=ExtResource("7_14lk2")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7.44905, 6.93809, 24.4705)
+
+[node name="large_wall2" parent="geo" instance=ExtResource("8_6bgty")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.4977, 4.43716, -0.0187049)
+
+[node name="large_wall3" parent="geo" instance=ExtResource("8_6bgty")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.6245, 4.43716, -0.0187049)
+
+[node name="large_wall4" parent="geo" instance=ExtResource("8_6bgty")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.6245, 4.43716, -0.0187049)

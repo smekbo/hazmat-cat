@@ -11,9 +11,13 @@ enum TYPE{PROP, TOOL}
 		multiplayer_authority = id
 
 var grab_target: Node3D
+var main: Main
+var player: Player
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	main = get_node("/root/Main")
 	multiplayer_authority = 1
 	set_process(false)
 
@@ -23,7 +27,8 @@ func change_authority(id):
 	multiplayer_authority = id
 
 
-func grabbed(player: Player):
+func grabbed(_player: Player):
+	player = _player
 	change_authority.rpc(player.player_id)
 	match type:
 		TYPE.PROP:
@@ -34,11 +39,24 @@ func grabbed(player: Player):
 
 
 func thrown():
+	player = null
 	change_authority.rpc(1)
 	grab_target = null
 	set_process(false)
 
 
+# should be overwritten by each tool's script that inherits this script
+func use():
+	pass
+
+func process():
+	pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if type == TYPE.TOOL:
+		if Input.is_action_just_pressed("use"):
+			use.rpc()
 	position = grab_target.global_position
+	rotation = grab_target.global_rotation
+	process()

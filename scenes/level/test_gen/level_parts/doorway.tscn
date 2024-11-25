@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://deobaefh6vddj"]
+
+[ext_resource type="Texture2D" uid="uid://c8488u7qoy65t" path="res://assets/textures/1ap.PNG" id="1_6p1by"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgg2q"]
+albedo_color = Color(0.824507, 0.758258, 0.520432, 1)
+albedo_texture = ExtResource("1_6p1by")
+
+[sub_resource type="BoxMesh" id="BoxMesh_a51b7"]
+material = SubResource("StandardMaterial3D_lgg2q")
+size = Vector3(5, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7pk2y"]
+size = Vector3(5, 3, 1)
+
+[node name="doorway" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_a51b7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2621, 0)
+shape = SubResource("BoxShape3D_7pk2y")

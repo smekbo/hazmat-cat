@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4y8qh42b7hww"]
+[gd_scene load_steps=25 format=3 uid="uid://c4y8qh42b7hww"]
 
 [ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_n7i08"]
 [ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="2_3dsmc"]
@@ -43,7 +43,7 @@ material = SubResource("StandardMaterial3D_2hmnv")
 size = Vector3(50, 0.5, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pgqr1"]
-size = Vector3(50, 0.5, 50)
+size = Vector3(50, 0.729492, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_sjm84"]
 material = SubResource("StandardMaterial3D_2hmnv")
@@ -54,7 +54,7 @@ albedo_color = Color(0.824507, 0.758258, 0.520432, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jf48n"]
 material = SubResource("StandardMaterial3D_lgg2q")
-size = Vector3(50, 6, 1)
+size = Vector3(50, 14, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oycx7"]
 albedo_color = Color(0.678944, 0.678944, 0.678944, 1)
@@ -63,15 +63,28 @@ albedo_color = Color(0.678944, 0.678944, 0.678944, 1)
 material = SubResource("StandardMaterial3D_oycx7")
 size = Vector3(50, 0.5, 1)
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_54o7a"]
+size = Vector3(50.08, 15, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dlxny"]
+material = SubResource("StandardMaterial3D_lgg2q")
+size = Vector3(10, 8, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n6tuu"]
+material = SubResource("StandardMaterial3D_oycx7")
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hy2o4"]
+size = Vector3(9.87207, 8.33191, 10)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points", "objects", "object_spawner")]
 script = ExtResource("1_n7i08")
 spawn_points = NodePath("spawn_points")
+objects = NodePath("objects")
+object_spawner = NodePath("MultiplayerSpawner")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3qg3j")
-
-[node name="TestBox" parent="." instance=ExtResource("2_3dsmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9881, 1.45058, 0.952299)
 
 [node name="spawn_points" type="Node3D" parent="."]
 
@@ -79,6 +92,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9881, 1.45058, 0.952299)
 script = ExtResource("3_4ju2y")
 
 [node name="player_model" parent="spawn_points/Marker3D" instance=ExtResource("4_x8o4p")]
+
+[node name="objects" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/tools/staple_gun/staple.tscn")
+spawn_path = NodePath("../objects")
+
+[node name="TestBox" parent="." instance=ExtResource("2_3dsmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9881, 1.45058, 0.952299)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0598288, 5.48814, -5.40482)
@@ -119,9 +141,10 @@ transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 
 shape = SubResource("CapsuleShape3D_m8yuy")
 
 [node name="lights" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 
 [node name="light" type="MeshInstance3D" parent="lights"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 4, 6.42268, 0)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 18.6755, 6.42268, -3.04194)
 mesh = SubResource("PlaneMesh_241c2")
 skeleton = NodePath("../../crappy_geo")
 
@@ -132,7 +155,7 @@ omni_range = 20.0
 omni_attenuation = 0.0
 
 [node name="light2" type="MeshInstance3D" parent="lights"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -3, 6.42268, -6.62537)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -17.4534, 6.42268, -3.39907)
 mesh = SubResource("PlaneMesh_241c2")
 skeleton = NodePath("../../crappy_geo")
 
@@ -143,7 +166,7 @@ omni_range = 20.0
 omni_attenuation = 0.0
 
 [node name="light3" type="MeshInstance3D" parent="lights"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 3, 6.42268, -13.4702)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -8.96455, 6.42268, -10.8892)
 mesh = SubResource("PlaneMesh_241c2")
 skeleton = NodePath("../../crappy_geo")
 
@@ -153,8 +176,30 @@ light_color = Color(1, 0.973483, 0.782902, 1)
 omni_range = 20.0
 omni_attenuation = 0.0
 
+[node name="light13" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 18.5973, 6.42268, -17.7105)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light14" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0.0690994, 6.42268, 20.913)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
 [node name="light4" type="MeshInstance3D" parent="lights"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -4, 6.42268, 5.9133)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 10.7677, 6.42268, 4.89932)
 mesh = SubResource("PlaneMesh_241c2")
 skeleton = NodePath("../../crappy_geo")
 
@@ -165,11 +210,88 @@ omni_range = 20.0
 omni_attenuation = 0.0
 
 [node name="light5" type="MeshInstance3D" parent="lights"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 4, 6.42268, 12.7472)
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 18.5833, 6.42268, 13.4846)
 mesh = SubResource("PlaneMesh_241c2")
 skeleton = NodePath("../../crappy_geo")
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="lights/light5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light6" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0.284378, 6.42268, -2.94976)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light7" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 10.6142, 6.42268, -10.6813)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light12" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -17.4086, 6.42268, -18.0514)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light8" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0.113991, 6.42268, -17.987)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light9" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -8.82183, 6.42268, 4.80714)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light11" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, -16.7493, 6.42268, 13.204)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
+light_color = Color(1, 0.973483, 0.782902, 1)
+omni_range = 20.0
+omni_attenuation = 0.0
+
+[node name="light10" type="MeshInstance3D" parent="lights"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0.192196, 6.42268, 13.2081)
+mesh = SubResource("PlaneMesh_241c2")
+skeleton = NodePath("../../crappy_geo")
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="lights/light10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55192e-08, 0.177519, 0)
 light_color = Color(1, 0.973483, 0.782902, 1)
 omni_range = 20.0
@@ -188,7 +310,7 @@ skeleton = NodePath("../../..")
 shape = SubResource("BoxShape3D_pgqr1")
 
 [node name="ceiling" type="StaticBody3D" parent="crappy_geo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.326246, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.67375, 0)
 visible = false
 collision_mask = 2
 
@@ -198,51 +320,83 @@ mesh = SubResource("BoxMesh_sjm84")
 skeleton = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/ceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.15449, 0)
 shape = SubResource("BoxShape3D_pgqr1")
 
 [node name="wall" type="StaticBody3D" parent="crappy_geo"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70308, 24.4374)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/wall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("BoxMesh_jf48n")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="crappy_geo/wall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21352, 0)
 mesh = SubResource("BoxMesh_0ihbo")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043396, 5.02591, 0)
+shape = SubResource("BoxShape3D_54o7a")
+
+[node name="wall5" type="StaticBody3D" parent="crappy_geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.233966, 2.70308, 19.0832)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.98745, 0)
+mesh = SubResource("BoxMesh_dlxny")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="crappy_geo/wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21352, 0)
+mesh = SubResource("BoxMesh_n6tuu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0662813, 1.76497, 0)
+shape = SubResource("BoxShape3D_hy2o4")
+
 [node name="wall2" type="StaticBody3D" parent="crappy_geo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70308, -24.5089)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70308, -24.5378)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/wall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("BoxMesh_jf48n")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="crappy_geo/wall2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21352, 0)
 mesh = SubResource("BoxMesh_0ihbo")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043396, 5.02591, 0)
+shape = SubResource("BoxShape3D_54o7a")
+
 [node name="wall3" type="StaticBody3D" parent="crappy_geo"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5445, 2.70308, -0.0468979)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5416, 2.70308, 0.101088)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/wall3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("BoxMesh_jf48n")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="crappy_geo/wall3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21352, 0)
 mesh = SubResource("BoxMesh_0ihbo")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043396, 5.02591, 0)
+shape = SubResource("BoxShape3D_54o7a")
+
 [node name="wall4" type="StaticBody3D" parent="crappy_geo"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.3794, 2.70308, -0.0468979)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.275, 2.70308, 0.101088)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="crappy_geo/wall4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("BoxMesh_jf48n")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="crappy_geo/wall4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21352, 0)
 mesh = SubResource("BoxMesh_0ihbo")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="crappy_geo/wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043396, 5.02591, 0)
+shape = SubResource("BoxShape3D_54o7a")
+
 [node name="StapleGun" parent="." instance=ExtResource("5_582vj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41822, 0.886751, -4.6898)

@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://dbeopwkqpc3mr"]
+
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_kgbrj"]
+[ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="3_3b0jw"]
+[ext_resource type="PackedScene" uid="uid://dq3xgo63wnx0c" path="res://scenes/level/test_gen/level_parts/light_cluster.tscn" id="3_04hsn"]
+[ext_resource type="PackedScene" uid="uid://sic88jii63rr" path="res://scenes/level/test_gen/level_parts/large_floor.tscn" id="4_keh38"]
+[ext_resource type="PackedScene" uid="uid://cg5dlgkkxctxq" path="res://scenes/level/test_gen/level_parts/small_wall.tscn" id="5_5k5lw"]
+[ext_resource type="PackedScene" uid="uid://b6th5hxkmgmh0" path="res://scenes/level/test_gen/level_parts/large_tall_wall.tscn" id="5_x0jkl"]
+[ext_resource type="PackedScene" uid="uid://ncw61h8la134" path="res://scenes/level/test_gen/level_parts/raised_floor.tscn" id="6_2dk5g"]
+[ext_resource type="PackedScene" uid="uid://deobaefh6vddj" path="res://scenes/level/test_gen/level_parts/doorway.tscn" id="6_duinu"]
+[ext_resource type="PackedScene" uid="uid://b0limoaqh7b2r" path="res://scenes/level/test_gen/level_parts/small_tall_wall.tscn" id="7_8n70f"]
+[ext_resource type="PackedScene" uid="uid://mcsj1a6npbl3" path="res://scenes/level/test_gen/level_parts/tall_doorway.tscn" id="10_xlxq6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0l2ha"]
+albedo_color = Color(0.509417, 1, 0.1965, 1)
+emission_enabled = true
+emission = Color(0.492522, 0.838383, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_behvi"]
+material = SubResource("StandardMaterial3D_0l2ha")
+
+[node name="Room" type="Node3D" node_paths=PackedStringArray("ceiling", "connectors")]
+transform = Transform3D(0.932859, 0, -0.360241, 0, 1, 0, 0.360241, 0, 0.932859, 0, 0, 0)
+script = ExtResource("1_kgbrj")
+ceiling = NodePath("geo/ceiling")
+connectors = NodePath("connectors")
+
+[node name="connectors" type="Node3D" parent="."]
+
+[node name="connector" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.65279, 0.261193, -25.0842)
+script = ExtResource("3_3b0jw")
+
+[node name="direction" type="Marker3D" parent="connectors/connector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector/direction"]
+mesh = SubResource("SphereMesh_behvi")
+
+[node name="connector2" type="Marker3D" parent="connectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.0924, 8.76622, 7.30856)
+script = ExtResource("3_3b0jw")
+
+[node name="direction" type="Marker3D" parent="connectors/connector2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4.76837e-07)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
+mesh = SubResource("SphereMesh_behvi")
+
+[node name="light_cluster" parent="." instance=ExtResource("3_04hsn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4842, 16.1416, -7.65811)
+
+[node name="light_cluster2" parent="." instance=ExtResource("3_04hsn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 16.1416, 8.95677)
+
+[node name="geo" type="Node3D" parent="."]
+
+[node name="ceiling" type="Node3D" parent="geo"]
+visible = false
+
+[node name="ceiling" parent="geo/ceiling" instance=ExtResource("4_keh38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.5283, 0)
+
+[node name="large_floor" parent="geo" instance=ExtResource("4_keh38")]
+
+[node name="large_tall_wall" parent="geo" instance=ExtResource("5_x0jkl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0513115, 4.49371, 24.4064)
+
+[node name="large_tall_wall3" parent="geo" instance=ExtResource("5_x0jkl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.4684, 4.49371, 0.0142717)
+
+[node name="small_wall" parent="geo" instance=ExtResource("6_2dk5g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1467, 4.51538, 7.3037)
+
+[node name="small_tall_wall" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5351, 4.51538, -17.3554)
+
+[node name="small_tall_wall2" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5351, 4.51538, -2.61206)
+
+[node name="small_tall_wall3" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5351, 4.51538, 17.206)
+
+[node name="small_wall2" parent="geo" instance=ExtResource("5_5k5lw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.5991, 4.51538, 7.8549)
+
+[node name="doorway" parent="geo" instance=ExtResource("6_duinu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.539, 15.0168, 7.32162)
+
+[node name="small_tall_wall4" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1084, 4.47096, -24.5004)
+
+[node name="small_tall_wall5" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.20904, 4.47096, -24.5004)
+
+[node name="small_tall_wall6" parent="geo" instance=ExtResource("7_8n70f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4549, 4.47096, -24.5004)
+
+[node name="tall_doorway" parent="geo" instance=ExtResource("10_xlxq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.63441, 6.97108, -24.4913)

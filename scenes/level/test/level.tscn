@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://3cc4bfvoky5e"]
+[gd_scene load_steps=14 format=3 uid="uid://3cc4bfvoky5e"]
 
 [ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_d0g1p"]
-[ext_resource type="Script" path="res://scenes/level/spawnpoint.gd" id="2_jl6a0"]
-[ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="2_kh5rh"]
+[ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="3_eyx1p"]
 [ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="4_6x2ma"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
@@ -54,11 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9881, 1.45058, -25.0477)
 [node name="spawn_points" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.73332, 1, 9.88017)
 
-[node name="Marker3D" type="Marker3D" parent="spawn_points"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.73662, 0, -37.8141)
-script = ExtResource("2_jl6a0")
-
-[node name="player_model" parent="spawn_points/Marker3D" instance=ExtResource("2_kh5rh")]
+[node name="Marker3D" parent="spawn_points" instance=ExtResource("3_eyx1p")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 12.0058, 18.4544, -23.6345)
