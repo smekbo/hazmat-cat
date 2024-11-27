@@ -9,9 +9,10 @@ func exit():
 	pass
 
 func process(delta: float):
-	if get_multiplayer_authority() == multiplayer.get_unique_id():
+	if player_input.get_multiplayer_authority() == multiplayer.get_unique_id():
 		player_input.process_directional_input(delta)
 		player_input.process_controller_camera(delta)
+		player_input.interact(delta)
 	
 		if Input.is_action_just_released("run"):
 			state_machine.state = "walking"

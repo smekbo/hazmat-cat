@@ -22,7 +22,7 @@ enum INTERACTION_STATES {CARRYING, THROWING, EMPTY}
 @export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY
 
 var held_object: GrabbableObject
-var throw_strength: float = 0
+@export var throw_strength: float = 0
 var MAX_THROW_STRENGTH = 25
 
 @export var speed: float
@@ -36,10 +36,34 @@ func _ready() -> void:
 		set_process(false)
 		set_process_input(false)
 
+
 func process_directional_input(delta: float):
 	motion = Vector2(
 			Input.get_action_strength("move_left") - Input.get_action_strength("move_right"),
 			Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward"))
+
+
+func interact(delta):
+	if Input.is_action_pressed("interact") and held_object != null:
+		match interaction_state:
+			INTERACTION_STATES.CARRYING:
+				throw_strength += delta * MAX_THROW_STRENGTH
+				throw_strength = clamp(throw_strength, 0, MAX_THROW_STRENGTH)
+
+	if Input.is_action_just_released("interact"):
+		match interaction_state:
+			INTERACTION_STATES.CARRYING:
+				var throw_direction = player.global_position.direction_to(player.camera_look_point.global_position).normalized()
+				held_object.throw(throw_direction, throw_strength)
+				throw_strength = 0
+				held_object = null
+				interaction_state = INTERACTION_STATES.EMPTY
+			INTERACTION_STATES.EMPTY:
+				if interact_ray.is_colliding():
+					held_object = interact_ray.get_collider()
+					held_object.grabbed(player)
+					interaction_state = INTERACTION_STATES.CARRYING
+
 
 func process_mouse_camera(event):
 	# Make mouse aiming speed resolution-independent
@@ -52,6 +76,7 @@ func process_mouse_camera(event):
 		var camera_speed_this_frame = CAMERA_MOUSE_ROTATION_SPEED
 		rotate_camera(event.relative * camera_speed_this_frame * scale_factor)
 
+
 func process_controller_camera(delta: float):
 	var camera_move = Vector2(
 			Input.get_action_strength("view_right") - Input.get_action_strength("view_left"),
@@ -59,6 +84,7 @@ func process_controller_camera(delta: float):
 	var camera_speed_this_frame = delta * CAMERA_CONTROLLER_ROTATION_SPEED
 	if camera_move > Vector2.ZERO:
 		rotate_camera(camera_move * camera_speed_this_frame)
+
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)

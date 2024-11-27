@@ -83,55 +83,6 @@ func apply_input(delta: float):
 		transform.origin = initial_position
 
 
-# func apply_input(delta: float):
-# 	motion = motion.lerp(player_input.motion, MOTION_INTERPOLATE_SPEED * delta)
-# 	var camera_basis : Basis = player_input.get_camera_rotation_basis()
-# 	var camera_z := camera_basis.z
-# 	var camera_x := camera_basis.x
-
-# 	camera_z.y = 0
-# 	camera_z = camera_z.normalized()
-# 	camera_x.y = 0
-# 	camera_x = camera_x.normalized()
-
-
-# 	# Convert orientation to quaternions for interpolating rotation.
-# 	var target = camera_x * motion.x + camera_z * motion.y
-# 	$debug_indicator.global_position = target
-# 	if target.length() > 0.001:
-# 		var q_from = orientation.basis.get_rotation_quaternion()
-# 		var q_to = Transform3D().looking_at(target, Vector3.UP).basis.get_rotation_quaternion()
-# 		# Interpolate current rotation with desired one.
-# 		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
-
-# 		var motion_position: Vector3 = animation_tree.get_root_motion_position()
-# 		if state_machine.current_state() == "airborne":
-# 			# motion_position = (target * orientation.basis) * player_input.speed * delta
-# 			motion_position = Vector3(0,0, velocity.length() * delta)
-# 			print(motion_position)
-# 		root_motion = Transform3D(animation_tree.get_root_motion_rotation(), motion_position)
-
-# 	# Apply root motion to orientation.
-# 	orientation *= root_motion
-
-# 	var h_velocity = (orientation.origin / delta)
-# 	velocity.x = h_velocity.x 
-# 	velocity.z = h_velocity.z 
-# 	velocity += gravity * delta
-# 	set_velocity(velocity)
-# 	set_up_direction(Vector3.UP)
-# 	move_and_slide()
-
-# 	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
-# 	orientation = orientation.orthonormalized() # Orthonormalize orientation.
-
-# 	player_model.global_transform.basis = orientation.basis
-
-# 	# If we're below -40, respawn (teleport to the initial position).
-# 	if transform.origin.y < -40:
-# 		transform.origin = initial_position
-
-
 func animate(movement, interaction, _delta:=0.0):
 	match movement:
 		PlayerInput.MOVEMENT_STATES.WALK:

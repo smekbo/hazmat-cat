@@ -43,7 +43,6 @@ func throw(direction: Vector3, strength: float):
 	linear_velocity = direction * strength
 	player = null
 	grab_target = null
-	change_authority.rpc(1)
 	set_process(false)
 
 # should be overwritten by each tool's script that inherits this script
