@@ -15,6 +15,8 @@ var root_motion = Transform3D()
 var motion = Vector2()
 var jump_motion: Vector3 
 
+@export var _is_on_floor: bool
+
 @onready var initial_position = transform.origin
 @onready var player_input: PlayerInput = $input_synchronizer
 @onready var animation_tree = $AnimationTree
@@ -72,6 +74,7 @@ func apply_input(delta: float):
 	set_velocity(velocity)
 	set_up_direction(Vector3.UP)
 	move_and_slide()
+	_is_on_floor = is_on_floor()
 
 	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
 	orientation = orientation.orthonormalized() # Orthonormalize orientation.
