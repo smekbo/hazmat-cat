@@ -13,7 +13,7 @@ func process(delta: float):
 	if multiplayer.is_server():
 		player.apply_input(delta)
 
-	state_machine.transition_to("airborne")
+	state_machine.state = "airborne"
 
 func input(event: InputEvent):
 	player_input.process_mouse_camera(event)

@@ -14,11 +14,11 @@ func process(delta: float):
 		player_input.process_controller_camera(delta)
 	
 		if Input.is_action_pressed("run"):
-			state_machine.transition_to("running")
+			state_machine.state = "running"
 		if Input.is_action_just_pressed("jump"):
-			state_machine.transition_to("jumping")
+			state_machine.state = "jumping"
 		if player_input.motion == Vector2.ZERO:
-			state_machine.transition_to("idle")	
+			state_machine.state = "idle"
 	
 	if multiplayer.is_server():
 		player.apply_input(delta)

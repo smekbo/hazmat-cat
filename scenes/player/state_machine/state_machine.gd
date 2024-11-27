@@ -6,29 +6,28 @@ signal state_changed(state: State)
 @export var player: Player
 @export var player_input: PlayerInput
 
-var state: State
-@export var state_name: String = "idle" :
+var state_node: State
+@export var state: String = "idle" :
 	set(name):
-		state_name = name
+		state = name
 		transition_to(name)
 
 func _ready() -> void:
-	state = get_node("idle")
-
+	state_node = get_node("idle")
 
 func transition_to(state_name: String):
 	print(state_name)
-	state.exit()
-	state = get_node(state_name) # error handle DEEZ NUTS
-	state.enter()
+	state_node.exit()
+	state_node = get_node(state_name) # error handle DEEZ NUTS
+	state_node.enter()
 	state_changed.emit()
 
 func current_state() -> String:
-	return state.name
+	return state
 
 func _process(delta: float) -> void:
-	state.process(delta)
+	state_node.process(delta)
 func _physics_process(delta: float) -> void:
-	state.physics(delta)
+	state_node.physics(delta)
 func _input(event: InputEvent) -> void:
-	state.input(event)
+	state_node.input(event)

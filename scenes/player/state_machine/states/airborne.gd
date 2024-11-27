@@ -16,7 +16,7 @@ func process(delta: float):
 		player.animation_tree["parameters/state/transition_request"] = "fall"
 	
 	if player.is_on_floor():
-		state_machine.transition_to("idle")
+		state_machine.state = "idle"
 
 func input(event: InputEvent):
 	player_input.process_mouse_camera(event)
