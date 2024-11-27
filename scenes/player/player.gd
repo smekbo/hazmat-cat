@@ -17,7 +17,7 @@ var jump_motion: Vector3
 
 @onready var initial_position = transform.origin
 @onready var player_input: PlayerInput = $input_synchronizer
-var animation_tree
+@onready var animation_tree = $AnimationTree
 @onready var player_model = $player_model
 @onready var state_machine: PlayerStateMachine = $state_machine
 
@@ -41,9 +41,6 @@ func _ready():
 	orientation = player_model.global_transform
 	orientation.origin = Vector3()
 	
-	animation_tree = $AnimationTree
-	
-	state_machine.on_player_ready()
 	if not multiplayer.is_server():
 		set_process(false)
 	

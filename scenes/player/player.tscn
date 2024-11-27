@@ -42,8 +42,11 @@ properties/4/path = NodePath("input_synchronizer:interaction_state")
 properties/4/spawn = true
 properties/4/replication_mode = 1
 properties/5/path = NodePath("state_machine:state_name")
-properties/5/spawn = true
-properties/5/replication_mode = 1
+properties/5/spawn = false
+properties/5/replication_mode = 2
+properties/6/path = NodePath("input_synchronizer:speed")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sy1gy"]
 
@@ -158,25 +161,20 @@ script = ExtResource("3_6raky")
 player = NodePath("..")
 player_input = NodePath("../input_synchronizer")
 
-[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("state_machine")]
+[node name="idle" type="Node" parent="state_machine"]
 script = ExtResource("4_fydh4")
-state_machine = NodePath("..")
 
-[node name="walking" type="Node" parent="state_machine" node_paths=PackedStringArray("state_machine")]
+[node name="walking" type="Node" parent="state_machine"]
 script = ExtResource("4_o0al4")
-state_machine = NodePath("..")
 
-[node name="running" type="Node" parent="state_machine" node_paths=PackedStringArray("state_machine")]
+[node name="running" type="Node" parent="state_machine"]
 script = ExtResource("5_foskt")
-state_machine = NodePath("..")
 
-[node name="jumping" type="Node" parent="state_machine" node_paths=PackedStringArray("state_machine")]
+[node name="jumping" type="Node" parent="state_machine"]
 script = ExtResource("6_jabkw")
-state_machine = NodePath("..")
 
-[node name="airborne" type="Node" parent="state_machine" node_paths=PackedStringArray("state_machine")]
+[node name="airborne" type="Node" parent="state_machine"]
 script = ExtResource("7_1hhv8")
-state_machine = NodePath("..")
 
 [node name="server_synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_q12l1")
@@ -316,6 +314,7 @@ layout_mode = 2
 texture = ExtResource("4_yf4pf")
 
 [node name="debug_indicator" type="Marker3D" parent="."]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="debug_indicator"]
 mesh = SubResource("SphereMesh_e6ab0")

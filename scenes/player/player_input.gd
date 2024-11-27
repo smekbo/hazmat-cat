@@ -25,7 +25,7 @@ var held_object: GrabbableObject
 var throw_strength: float = 0
 var MAX_THROW_STRENGTH = 25
 
-var speed: float
+@export var speed: float
 
 func _ready() -> void:
 	# Only run process and input if it's the actual player
@@ -35,50 +35,6 @@ func _ready() -> void:
 	else:
 		set_process(false)
 		set_process_input(false)
-
-
-#func process_movement(delta: float) -> void:
-	#motion = Vector2(
-			#Input.get_action_strength("move_left") - Input.get_action_strength("move_right"),
-			#Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward"))
-	#var camera_move = Vector2(
-			#Input.get_action_strength("view_right") - Input.get_action_strength("view_left"),
-			#Input.get_action_strength("view_up") - Input.get_action_strength("view_down"))
-	#var camera_speed_this_frame = delta * CAMERA_CONTROLLER_ROTATION_SPEED
-	#rotate_camera(camera_move * camera_speed_this_frame)
-	#
-	#if Input.is_action_pressed("run"):
-		#movement_state = MOVEMENT_STATES.RUN
-	#else:
-		#movement_state = MOVEMENT_STATES.WALK
-#
-	#if player.airborne:
-		#if player.is_on_floor():
-			#movement_state = MOVEMENT_STATES.WALK
-	#if Input.is_action_just_pressed("jump"):
-		#movement_state = MOVEMENT_STATES.JUMP
-#
-	#if Input.is_action_just_released("interact"):
-		#match interaction_state:
-			#INTERACTION_STATES.CARRYING:
-				#var throw_direction = player.global_position.direction_to(player.camera_look_point.global_position).normalized()
-				#held_object.throw(throw_direction, throw_strength)
-				#throw_strength = 0
-				#held_object = null
-				#interaction_state = INTERACTION_STATES.EMPTY
-			#INTERACTION_STATES.EMPTY:
-				#if interact_ray.is_colliding():
-					#held_object = interact_ray.get_collider()
-					#held_object.grabbed(player)
-					#interaction_state = INTERACTION_STATES.CARRYING
-#
-	#if Input.is_action_pressed("interact") and held_object != null:
-		#match interaction_state:
-			#INTERACTION_STATES.CARRYING:
-				#throw_strength += delta * MAX_THROW_STRENGTH
-				#throw_strength = clamp(throw_strength, 0, MAX_THROW_STRENGTH)
-#
-	#update_debug()
 
 func process_directional_input(delta: float):
 	motion = Vector2(
