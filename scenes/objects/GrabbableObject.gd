@@ -39,12 +39,12 @@ func grabbed(_player: Player):
 
 
 func throw(direction: Vector3, strength: float):
+	global_position = grab_target.global_position
+	linear_velocity = direction * strength
 	player = null
 	grab_target = null
 	change_authority.rpc(1)
 	set_process(false)
-	global_position = grab_target.global_position
-	linear_velocity = direction * strength
 
 # should be overwritten by each tool's script that inherits this script
 func use():

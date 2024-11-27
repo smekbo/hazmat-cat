@@ -29,6 +29,7 @@ size = Vector3(1.05, 1.05, 1.05)
 [node name="TestBox" type="RigidBody3D" node_paths=PackedStringArray("multiplayer_synchronizer")]
 collision_layer = 4
 collision_mask = 3
+mass = 10.0
 script = ExtResource("1_paenf")
 multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
 

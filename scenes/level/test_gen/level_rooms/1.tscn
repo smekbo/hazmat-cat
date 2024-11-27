@@ -8,13 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://deobaefh6vddj" path="res://scenes/level/test_gen/level_parts/doorway.tscn" id="7_14lk2"]
 [ext_resource type="PackedScene" uid="uid://b3clgk03qkvtp" path="res://scenes/level/test_gen/level_parts/large_wall.tscn" id="8_6bgty"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3row"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y75oo"]
 albedo_color = Color(0.509417, 1, 0.1965, 1)
 emission_enabled = true
 emission = Color(0.492522, 0.838383, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_coktl"]
-material = SubResource("StandardMaterial3D_w3row")
+material = SubResource("StandardMaterial3D_y75oo")
 
 [node name="Room" type="Node3D" node_paths=PackedStringArray("ceiling", "connectors")]
 script = ExtResource("1_kolkk")
