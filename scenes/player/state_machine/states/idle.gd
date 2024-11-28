@@ -2,7 +2,8 @@ extends State
 
 func enter():
 	player_input.speed = 100
-	player.animation_tree["parameters/state/transition_request"] = "idle"
+	player_input.movement_state = player_input.MOVEMENT_STATES.WALK
+	player.animate()
 
 func process(delta: float):
 	if player_input.get_multiplayer_authority() == multiplayer.get_unique_id():

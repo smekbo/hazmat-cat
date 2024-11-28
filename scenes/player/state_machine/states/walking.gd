@@ -3,7 +3,8 @@ extends State
 
 func enter():
 	player_input.speed = state_machine.player.WALK_SPEED
-	player.animation_tree["parameters/state/transition_request"] = "walk"
+	player_input.movement_state = player_input.MOVEMENT_STATES.WALK
+	player.animate()
 
 func exit():
 	pass

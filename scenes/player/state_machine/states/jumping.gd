@@ -3,7 +3,7 @@ extends State
 
 func enter():
 	if multiplayer.is_server():
-		player.jump()
+		player.apply_jump_velocity()
 	player.animation_tree["parameters/state/transition_request"] = "jump"
 
 func exit():

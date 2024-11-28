@@ -40,3 +40,6 @@ shape = SubResource("CapsuleShape3D_so1aq")
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
 target_position = Vector3(100, 0, 0)
+
+[node name="staple_spawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.560718)

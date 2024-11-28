@@ -16,7 +16,7 @@ const CAMERA_X_ROT_MAX := deg_to_rad(45)
 
 @onready var player: Player = $".."
 
-enum MOVEMENT_STATES {WALK, RUN, JUMP, FALL}
+enum MOVEMENT_STATES {IDLE, WALK, RUN, JUMP, FALL}
 enum INTERACTION_STATES {CARRYING, THROWING, EMPTY}
 @export var movement_state : MOVEMENT_STATES = MOVEMENT_STATES.WALK
 @export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY

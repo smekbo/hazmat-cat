@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://8sdficf8mwub"]
+[gd_scene load_steps=13 format=3 uid="uid://8sdficf8mwub"]
 
 [ext_resource type="Script" path="res://scenes/level/test_gen/level.gd" id="1_u6enb"]
 [ext_resource type="PackedScene" uid="uid://5327hb60j0u" path="res://scenes/level/test_gen/level_rooms/1.tscn" id="2_dalg3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://8fny6nh0u5ur" path="res://scenes/level/test_gen/level_rooms/3.tscn" id="4_xrew8"]
 [ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/tools/staple_gun/staple_gun.tscn" id="6_pph6u"]
 [ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="7_u6ru3"]
+[ext_resource type="PackedScene" uid="uid://ygb3sifcrxje" path="res://scenes/tools/ladder/ladder.tscn" id="8_a3qt5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0mj00"]
 properties/0/path = NodePath(".:room_id_list")
@@ -77,3 +78,6 @@ spawn_path = NodePath("../objects")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 100.134, 124.474)
+
+[node name="Ladder" parent="." instance=ExtResource("8_a3qt5")]
+transform = Transform3D(-1.13133e-08, 0.965926, 0.258819, 4.2222e-08, 0.258819, -0.965926, -1, 0, -4.37114e-08, -6.40544, 2.7051, -0.633305)

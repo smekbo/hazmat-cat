@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqcqoy7syxn7j"]
+[gd_scene load_steps=6 format=3 uid="uid://dqcqoy7syxn7j"]
+
+[ext_resource type="Script" path="res://scenes/tools/staple_gun/staple.gd" id="1_obwie"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e8fty"]
 properties/0/path = NodePath(".:position")
@@ -9,7 +11,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvxpn"]
-size = Vector3(0.559631, 0.0705566, 0.5401)
+size = Vector3(0.661941, 0.0705566, 0.632828)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tfmgn"]
 size = Vector3(0.05, 0.5, 0.05)
@@ -17,23 +19,30 @@ size = Vector3(0.05, 0.5, 0.05)
 [sub_resource type="BoxMesh" id="BoxMesh_3a3wu"]
 size = Vector3(0.05, 0.55, 0.05)
 
-[node name="Staple" type="StaticBody3D"]
+[node name="Staple" type="RigidBody3D"]
+script = ExtResource("1_obwie")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_e8fty")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00332642, -0.00574967, -0.188544)
+transform = Transform3D(0.996732, 0, 0, 0, 0.996732, 0, 0, 0, 0.996732, -0.00116724, -0.00574967, -0.179274)
 shape = SubResource("BoxShape3D_yvxpn")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.251322, 0, -0.18231)
+transform = Transform3D(-1.2, -1.04907e-07, 3.82137e-15, 0, -5.24537e-08, -1, 1.04907e-07, -1.2, 4.37114e-08, -0.301322, 0, -0.165643)
 mesh = SubResource("BoxMesh_tfmgn")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -0.00132228, 0, -0.43231)
+transform = Transform3D(-5.24537e-08, 1.2, -4.37114e-08, 0, -5.24537e-08, -1, -1.2, -5.24537e-08, 1.91069e-15, -0.00132232, 0, -0.465643)
 mesh = SubResource("BoxMesh_3a3wu")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.248678, 0, -0.18231)
+transform = Transform3D(-1.2, -1.04907e-07, 3.82137e-15, 0, -5.24537e-08, -1, 1.04907e-07, -1.2, 4.37114e-08, 0.298678, 0, -0.165643)
 mesh = SubResource("BoxMesh_tfmgn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="on_timeout"]

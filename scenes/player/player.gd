@@ -86,24 +86,23 @@ func apply_input(delta: float):
 		transform.origin = initial_position
 
 
-func animate(movement, interaction, _delta:=0.0):
-	match movement:
+func animate():
+	match player_input.movement_state:
+		PlayerInput.MOVEMENT_STATES.IDLE:
+			animation_tree["parameters/state/transition_request"] = "idle"
 		PlayerInput.MOVEMENT_STATES.WALK:
-			# Change state to walk.
 			animation_tree["parameters/state/transition_request"] = "walk"
-			# Blend position for walk speed based checked motion.
-			animation_tree["parameters/walk/blend_position"] = player_input.motion
 		PlayerInput.MOVEMENT_STATES.RUN:
 			animation_tree["parameters/state/transition_request"] = "run"
-			animation_tree["parameters/run/blend_position"] = player_input.motion
-	
-	match interaction:
+		PlayerInput.MOVEMENT_STATES.JUMP:
+			animation_tree["parameters/state/transition_request"] = "jump"
+
+	match player_input.interaction_state:
 		PlayerInput.INTERACTION_STATES.CARRYING:
 			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 1.0, 1)
 		PlayerInput.INTERACTION_STATES.EMPTY:
 			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 0.0, 1)
 
 
-func jump():
-	print("ONCE")
+func apply_jump_velocity():
 	velocity.y = JUMP_SPEED
