@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbeopwkqpc3mr"]
+[gd_scene load_steps=12 format=3 uid="uid://dbeopwkqpc3mr"]
 
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_kgbrj"]
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="3_3b0jw"]
-[ext_resource type="PackedScene" uid="uid://dq3xgo63wnx0c" path="res://scenes/level/test_gen/level_parts/light_cluster.tscn" id="3_04hsn"]
 [ext_resource type="PackedScene" uid="uid://sic88jii63rr" path="res://scenes/level/test_gen/level_parts/large_floor.tscn" id="4_keh38"]
 [ext_resource type="PackedScene" uid="uid://cg5dlgkkxctxq" path="res://scenes/level/test_gen/level_parts/small_wall.tscn" id="5_5k5lw"]
 [ext_resource type="PackedScene" uid="uid://b6th5hxkmgmh0" path="res://scenes/level/test_gen/level_parts/large_tall_wall.tscn" id="5_x0jkl"]
@@ -20,7 +19,7 @@ emission = Color(0.492522, 0.838383, 0, 1)
 material = SubResource("StandardMaterial3D_0l2ha")
 
 [node name="Room" type="Node3D" node_paths=PackedStringArray("ceiling", "connectors")]
-transform = Transform3D(0.932859, 0, -0.360241, 0, 1, 0, 0.360241, 0, 0.932859, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_kgbrj")
 ceiling = NodePath("geo/ceiling")
 connectors = NodePath("connectors")
@@ -46,12 +45,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4.76837e-07)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
 mesh = SubResource("SphereMesh_behvi")
-
-[node name="light_cluster" parent="." instance=ExtResource("3_04hsn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4842, 16.1416, -7.65811)
-
-[node name="light_cluster2" parent="." instance=ExtResource("3_04hsn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 16.1416, 8.95677)
 
 [node name="geo" type="Node3D" parent="."]
 
@@ -98,3 +91,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4549, 4.47096, -24.5004)
 
 [node name="tall_doorway" parent="geo" instance=ExtResource("10_xlxq6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.63441, 6.97108, -24.4913)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.35988, 0)
+omni_range = 36.3428

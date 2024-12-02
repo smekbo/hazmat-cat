@@ -16,7 +16,7 @@ func _ready() -> void:
 	state_node = get_node("idle")
 
 func transition_to(state_name: String):
-	print(state_name)
+	# print(state_name)
 	state_node.exit()
 	state_node = get_node(state_name) # error handle DEEZ NUTS
 	state_node.enter()

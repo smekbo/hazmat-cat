@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://8sdficf8mwub"]
+[gd_scene load_steps=14 format=3 uid="uid://8sdficf8mwub"]
 
 [ext_resource type="Script" path="res://scenes/level/test_gen/level.gd" id="1_u6enb"]
 [ext_resource type="PackedScene" uid="uid://5327hb60j0u" path="res://scenes/level/test_gen/level_rooms/1.tscn" id="2_dalg3"]
 [ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="2_nd5ma"]
 [ext_resource type="PackedScene" uid="uid://dbeopwkqpc3mr" path="res://scenes/level/test_gen/level_rooms/2.tscn" id="3_lkhf1"]
 [ext_resource type="PackedScene" uid="uid://8fny6nh0u5ur" path="res://scenes/level/test_gen/level_rooms/3.tscn" id="4_xrew8"]
-[ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/tools/staple_gun/staple_gun.tscn" id="6_pph6u"]
-[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="7_u6ru3"]
-[ext_resource type="PackedScene" uid="uid://ygb3sifcrxje" path="res://scenes/tools/ladder/ladder.tscn" id="8_a3qt5"]
+[ext_resource type="PackedScene" uid="uid://1im05dfohkw3" path="res://scenes/level/test_gen/level_rooms/4.tscn" id="5_yaru2"]
+[ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/objects/tools/staple_gun/staple_gun.tscn" id="6_pph6u"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/props/test_box/test_box.tscn" id="7_u6ru3"]
+[ext_resource type="PackedScene" uid="uid://ygb3sifcrxje" path="res://scenes/objects/tools/ladder/ladder.tscn" id="8_a3qt5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0mj00"]
 properties/0/path = NodePath(".:room_id_list")
@@ -27,14 +28,14 @@ ground_horizon_color = Color(0, 0, 0, 1)
 sky_material = SubResource("ProceduralSkyMaterial_gt2em")
 
 [sub_resource type="Environment" id="Environment_3qg3j"]
+background_mode = 2
 background_energy_multiplier = 1.42
 sky = SubResource("Sky_vhbjw")
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_source = 3
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("rooms", "spawn_points", "objects", "object_spawner")]
 script = ExtResource("1_u6enb")
-room_list = Array[PackedScene]([ExtResource("2_dalg3"), ExtResource("3_lkhf1"), ExtResource("4_xrew8")])
+room_list = Array[PackedScene]([ExtResource("2_dalg3"), ExtResource("3_lkhf1"), ExtResource("4_xrew8"), ExtResource("5_yaru2")])
 level_depth = 5
 rooms = NodePath("rooms")
 spawn_points = NodePath("spawn_points")
@@ -70,14 +71,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.620292, 0)
 [node name="TestBox" parent="objects" instance=ExtResource("7_u6ru3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.76495, 0.842955, -5.74172)
 
+[node name="Ladder" parent="objects" instance=ExtResource("8_a3qt5")]
+transform = Transform3D(-4.37114e-08, -0.258819, 0.965926, 0, 0.965926, 0.258819, -1, 1.13133e-08, -4.2222e-08, -5.37483, 0.140859, -0.359561)
+
 [node name="objectSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/tools/staple_gun/staple.tscn")
 spawn_path = NodePath("../objects")
 
 [node name="rooms" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 100.134, 124.474)
-
-[node name="Ladder" parent="." instance=ExtResource("8_a3qt5")]
-transform = Transform3D(-1.13133e-08, 0.965926, 0.258819, 4.2222e-08, 0.258819, -0.965926, -1, 0, -4.37114e-08, -6.40544, 2.7051, -0.633305)

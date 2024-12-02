@@ -87,21 +87,17 @@ func reorient_room():
 	# Add info to generated level data
 	room_id_list.append(new_room.room_id)
 	room_transform_list.append(new_room.global_transform)
-
-	print(new_room.global_transform.origin)
 	
 	if rooms.get_children().size() <= level_depth:
 		generate_room()
 	else:
 		on_level_finished_generating()
-		print("%s %s" % [multiplayer.get_unique_id(), room_id_list])
+
 		
 func generate_level_from_data():
 	$levelSynchronizer.synchronized.disconnect(generate_level_from_data)
-	print("%s %s" % [multiplayer.get_unique_id(), room_id_list])
 	var index = 0
 	for room in room_id_list:
-		print(room)
 		var room_scene = room_list[room]
 		new_room = room_scene.instantiate()
 		rooms.add_child(new_room)

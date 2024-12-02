@@ -23,8 +23,8 @@ var jump_motion: Vector3
 @onready var player_model = $player_model
 @onready var state_machine: PlayerStateMachine = $state_machine
 
-@export var carry_point: Node3D
-@export var tool_point: Node3D
+@export var overhead_carry_point: Node3D
+@export var front_carry_point: Node3D
 @export var camera_look_point: Node3D
 
 @onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
@@ -86,7 +86,7 @@ func apply_input(delta: float):
 		transform.origin = initial_position
 
 
-func animate():
+func animate_movement():
 	match player_input.movement_state:
 		PlayerInput.MOVEMENT_STATES.IDLE:
 			animation_tree["parameters/state/transition_request"] = "idle"
@@ -97,12 +97,31 @@ func animate():
 		PlayerInput.MOVEMENT_STATES.JUMP:
 			animation_tree["parameters/state/transition_request"] = "jump"
 
+
+func animate_interaction():
 	match player_input.interaction_state:
 		PlayerInput.INTERACTION_STATES.CARRYING:
-			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 1.0, 1)
+			# set appropriate arm position for object being carried
+			match player_input.held_object.carry:
+				player_input.held_object.CARRY.OVERHEAD:
+					animation_tree["parameters/overhead_carry/blend_amount"] = lerp(animation_tree["parameters/overhead_carry/blend_amount"], 1.0, .2)
+					player_input.camera_rot.position.x = lerp(player_input.camera_rot.position.x, 1.0, 0.1)
+				player_input.held_object.CARRY.FRONT:
+					animation_tree["parameters/front_carry/blend_amount"] = lerp(animation_tree["parameters/front_carry/blend_amount"], 1.0, 0.2)
+					player_input.camera_rot.position.x = lerp(player_input.camera_rot.position.x, 1.0, 0.1)
 		PlayerInput.INTERACTION_STATES.EMPTY:
-			animation_tree["parameters/carry/blend_amount"] = lerp(animation_tree["parameters/carry/blend_amount"], 0.0, 1)
+			animation_tree["parameters/overhead_carry/blend_amount"] = lerp(animation_tree["parameters/overhead_carry/blend_amount"], 0.0, 0.2)
+			animation_tree["parameters/front_carry/blend_amount"] = lerp(animation_tree["parameters/front_carry/blend_amount"], 0.0, 0.2)
+			player_input.camera_rot.position.x = lerp(player_input.camera_rot.position.x, 0.0, 0.1)
 
 
 func apply_jump_velocity():
 	velocity.y = JUMP_SPEED
+
+
+func _on_interact_area_body_entered(body: GrabbableObject) -> void:
+	body.outline.show()
+
+
+func _on_interact_area_body_exited(body: GrabbableObject) -> void:
+	body.outline.hide()

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_d0g1p"]
 [ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="3_eyx1p"]
-[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="4_6x2ma"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/props/test_box/test_box.tscn" id="4_6x2ma"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
 sky_top_color = Color(0, 0, 0, 1)

@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://5327hb60j0u"]
+[gd_scene load_steps=9 format=3 uid="uid://5327hb60j0u"]
 
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_kolkk"]
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="3_mceb7"]
-[ext_resource type="PackedScene" uid="uid://dq3xgo63wnx0c" path="res://scenes/level/test_gen/level_parts/light_cluster.tscn" id="4_ajn30"]
 [ext_resource type="PackedScene" uid="uid://sic88jii63rr" path="res://scenes/level/test_gen/level_parts/large_floor.tscn" id="5_ankwt"]
 [ext_resource type="PackedScene" uid="uid://cg5dlgkkxctxq" path="res://scenes/level/test_gen/level_parts/small_wall.tscn" id="6_6eav2"]
 [ext_resource type="PackedScene" uid="uid://deobaefh6vddj" path="res://scenes/level/test_gen/level_parts/doorway.tscn" id="7_14lk2"]
@@ -43,11 +42,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
 mesh = SubResource("SphereMesh_coktl")
 
-[node name="light_cluster" parent="." instance=ExtResource("4_ajn30")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4842, 8.21602, -7.65811)
-
-[node name="light_cluster2" parent="." instance=ExtResource("4_ajn30")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 8.21602, 8.95677)
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.35988, 0)
+omni_range = 36.3428
 
 [node name="geo" type="Node3D" parent="."]
 

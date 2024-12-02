@@ -1,41 +1,36 @@
 [gd_scene load_steps=7 format=3 uid="uid://duyp7e65gnie1"]
 
-[ext_resource type="Script" path="res://scenes/objects/test_box/test_box.gd" id="1_paenf"]
+[ext_resource type="Script" path="res://scenes/objects/props/test_box/test_box.gd" id="1_paenf"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cudnf"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uoy6e"]
-shading_mode = 0
-albedo_color = Color(0.803285, 0.629468, 0, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4h6co"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_wb13v"]
-material = SubResource("StandardMaterial3D_uoy6e")
+[sub_resource type="BoxMesh" id="BoxMesh_u2ce6"]
+material = SubResource("StandardMaterial3D_4h6co")
 flip_faces = true
-size = Vector3(1.05, 1.05, 1.05)
 
 [sub_resource type="BoxMesh" id="BoxMesh_oiml8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0fhl3"]
 
-[node name="TestBox" type="RigidBody3D" node_paths=PackedStringArray("multiplayer_synchronizer")]
+[node name="TestBox" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 3
 mass = 10.0
 script = ExtResource("1_paenf")
-multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
+carry = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_cudnf")
 
 [node name="outline" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
 visible = false
-mesh = SubResource("BoxMesh_wb13v")
+mesh = SubResource("BoxMesh_u2ce6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_oiml8")

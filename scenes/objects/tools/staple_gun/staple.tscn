@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqcqoy7syxn7j"]
 
-[ext_resource type="Script" path="res://scenes/tools/staple_gun/staple.gd" id="1_obwie"]
+[ext_resource type="Script" path="res://scenes/objects/tools/staple_gun/staple.gd" id="1_obwie"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e8fty"]
 properties/0/path = NodePath(".:position")

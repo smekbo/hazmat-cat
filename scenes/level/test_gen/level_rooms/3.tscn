@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://8fny6nh0u5ur"]
+[gd_scene load_steps=12 format=3 uid="uid://8fny6nh0u5ur"]
 
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/Room.gd" id="1_5mggy"]
 [ext_resource type="Script" path="res://scenes/level/test_gen/level_rooms/connector.gd" id="2_7yf2b"]
@@ -14,14 +14,6 @@ emission = Color(0.492522, 0.838383, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_23drc"]
 material = SubResource("StandardMaterial3D_w3row")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6a4s"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_241c2"]
-material = SubResource("StandardMaterial3D_t6a4s")
-size = Vector2(4, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hmnv"]
 albedo_color = Color(0.733139, 0.771982, 0.405798, 1)
@@ -59,54 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="connectors/connector2/direction"]
 mesh = SubResource("SphereMesh_23drc")
-
-[node name="light_cluster2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.423, 8.21602, 8.95677)
-
-[node name="light" type="MeshInstance3D" parent="light_cluster2"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.2779, 0, -26.5484)
-mesh = SubResource("PlaneMesh_241c2")
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light"]
-light_color = Color(1, 0.973483, 0.782902, 1)
-omni_range = 20.0
-omni_attenuation = 0.0
-
-[node name="light2" type="MeshInstance3D" parent="light_cluster2"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.1954, 0, -14.7097)
-mesh = SubResource("PlaneMesh_241c2")
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light2"]
-light_color = Color(1, 0.973483, 0.782902, 1)
-omni_range = 20.0
-omni_attenuation = 0.0
-
-[node name="light3" type="MeshInstance3D" parent="light_cluster2"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.3384, 0, -2.4884)
-mesh = SubResource("PlaneMesh_241c2")
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light3"]
-light_color = Color(1, 0.973483, 0.782902, 1)
-omni_range = 20.0
-omni_attenuation = 0.0
-
-[node name="light4" type="MeshInstance3D" parent="light_cluster2"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.3384, 0, 7.8694)
-mesh = SubResource("PlaneMesh_241c2")
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light4"]
-light_color = Color(1, 0.973483, 0.782902, 1)
-omni_range = 20.0
-omni_attenuation = 0.0
-
-[node name="light5" type="MeshInstance3D" parent="light_cluster2"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 12.1954, 0, 17.9018)
-mesh = SubResource("PlaneMesh_241c2")
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="light_cluster2/light5"]
-light_color = Color(1, 0.973483, 0.782902, 1)
-omni_range = 20.0
-omni_attenuation = 0.0
 
 [node name="geo" type="Node3D" parent="."]
 
@@ -158,3 +102,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 
 [node name="small_floor3" parent="geo" instance=ExtResource("6_30s3y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.35988, 0)
+omni_range = 36.3428

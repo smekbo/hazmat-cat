@@ -12,14 +12,27 @@ const CAMERA_X_ROT_MAX := deg_to_rad(45)
 @export var camera_base : Node3D
 @export var camera_rot : Node3D
 @export var camera_camera : Camera3D
-@export var interact_ray : RayCast3D
+@export var use_ray : RayCast3D
+@export var grab_area : Area3D
 
 @onready var player: Player = $".."
 
 enum MOVEMENT_STATES {IDLE, WALK, RUN, JUMP, FALL}
-enum INTERACTION_STATES {CARRYING, THROWING, EMPTY}
-@export var movement_state : MOVEMENT_STATES = MOVEMENT_STATES.WALK
-@export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY
+enum INTERACTION_STATES {CARRYING, EMPTY}
+@export var movement_state : MOVEMENT_STATES = MOVEMENT_STATES.WALK :
+	set(state):
+		movement_state = state
+		player.animate_movement()
+@export var interaction_state : INTERACTION_STATES = INTERACTION_STATES.EMPTY :
+	set(state):
+		interaction_state = state
+		player.animate_interaction()
+		if state == INTERACTION_STATES.CARRYING:
+			grab_area.monitoring = false
+		if state == INTERACTION_STATES.EMPTY:
+			throw_strength = 0
+			held_object = null
+			grab_area.monitoring = true
 
 var held_object: GrabbableObject
 @export var throw_strength: float = 0
@@ -55,13 +68,11 @@ func interact(delta):
 			INTERACTION_STATES.CARRYING:
 				var throw_direction = player.global_position.direction_to(player.camera_look_point.global_position).normalized()
 				held_object.throw(throw_direction, throw_strength)
-				throw_strength = 0
-				held_object = null
 				interaction_state = INTERACTION_STATES.EMPTY
 			INTERACTION_STATES.EMPTY:
-				if interact_ray.is_colliding():
-					held_object = interact_ray.get_collider()
-					held_object.grabbed(player)
+				if grab_area.has_overlapping_bodies():
+					held_object = grab_area.get_overlapping_bodies()[0]
+					held_object.grabbed(player.player_id)
 					interaction_state = INTERACTION_STATES.CARRYING
 
 

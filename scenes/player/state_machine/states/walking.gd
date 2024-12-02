@@ -4,7 +4,6 @@ extends State
 func enter():
 	player_input.speed = state_machine.player.WALK_SPEED
 	player_input.movement_state = player_input.MOVEMENT_STATES.WALK
-	player.animate()
 
 func exit():
 	pass
@@ -14,6 +13,7 @@ func process(delta: float):
 		player_input.process_directional_input(delta)
 		player_input.process_controller_camera(delta)
 		player_input.interact(delta)
+		player.animate_interaction()
 	
 		if Input.is_action_pressed("run"):
 			state_machine.state = "running"

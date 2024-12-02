@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://nxn7djfuha0p"]
+[gd_scene load_steps=7 format=3 uid="uid://nxn7djfuha0p"]
 
-[ext_resource type="Script" path="res://scenes/tools/staple_gun/staple_gun.gd" id="1_blq4f"]
+[ext_resource type="Script" path="res://scenes/objects/tools/staple_gun/staple_gun.gd" id="1_blq4f"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lkxvr"]
 properties/0/path = NodePath(".:position")
@@ -10,6 +10,17 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_miqiu"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0ehij"]
+material = SubResource("StandardMaterial3D_miqiu")
+flip_faces = true
+radius = 0.25
+height = 1.0
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_2ulp7"]
 radius = 0.25
 height = 1.0
@@ -18,16 +29,20 @@ height = 1.0
 radius = 0.25
 height = 1.0
 
-[node name="StapleGun" type="RigidBody3D" node_paths=PackedStringArray("multiplayer_synchronizer")]
+[node name="StapleGun" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 3
 mass = 10.0
 script = ExtResource("1_blq4f")
 type = 1
-multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_lkxvr")
+
+[node name="outline" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.46513e-15, 7.92728e-08, 1.05, -1.05, -4.5897e-08, -9.78323e-21, 4.5897e-08, -1.05, 7.92728e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_0ehij")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-5.73206e-15, 1.31134e-07, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, 1.31134e-07, 0, 0, 0)

@@ -1,11 +1,8 @@
 extends GrabbableObject
 
-@onready var staple_scene = preload("res://scenes/tools/staple_gun/staple.tscn")
-@onready var raycast: RayCast3D = $RayCast3D
+@onready var staple_scene = preload("res://scenes/objects/tools/staple_gun/staple.tscn")
 @onready var staple_spawn: Node3D = $staple_spawn
 
-func ready():
-	raycast = player.player_input.interact_ray
 
 @rpc("call_local")
 func use():
@@ -18,4 +15,5 @@ func use():
 		
 
 func process():
-	look_at(player.camera_look_point.global_position)
+	if player != null:
+		look_at(player.camera_look_point.global_position)

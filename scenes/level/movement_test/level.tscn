@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://plqlswrdfh0v"]
+
+[ext_resource type="Script" path="res://scenes/level/movement_test/level.gd" id="1_dplyp"]
+[ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="2_15w8l"]
+[ext_resource type="Texture2D" uid="uid://bodn4gvvsrver" path="res://assets/GreyboxTextures/greybox_light_grid.png" id="3_od0oi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ennha"]
+
+[sub_resource type="Sky" id="Sky_a4nsq"]
+sky_material = SubResource("ProceduralSkyMaterial_ennha")
+
+[sub_resource type="Environment" id="Environment_0gtm6"]
+background_mode = 2
+sky = SubResource("Sky_a4nsq")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_uxtxb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0v0ho"]
+albedo_texture = ExtResource("3_od0oi")
+uv1_scale = Vector3(120, 100, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l2has"]
+material = SubResource("StandardMaterial3D_0v0ho")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kxjab"]
+size = Vector3(100, 1, 100)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points", "objects", "object_spawner")]
+script = ExtResource("1_dplyp")
+spawn_points = NodePath("spawn_points")
+objects = NodePath("objects")
+object_spawner = NodePath("MultiplayerSpawner")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0gtm6")
+camera_attributes = SubResource("CameraAttributesPractical_uxtxb")
+
+[node name="spawn_points" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.546542, 0)
+
+[node name="Marker3D" parent="spawn_points" instance=ExtResource("2_15w8l")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_l2has")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_kxjab")
+
+[node name="objects" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../objects")

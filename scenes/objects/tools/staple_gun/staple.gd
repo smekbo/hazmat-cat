@@ -5,7 +5,7 @@ var player: Player
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	max_contacts_reported = 1
-	contact_monitor = true	
+	contact_monitor = true
 	body_entered.connect(on_hit_body)
 
 

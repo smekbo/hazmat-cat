@@ -2,14 +2,14 @@ extends State
 
 func enter():
 	player_input.speed = 100
-	player_input.movement_state = player_input.MOVEMENT_STATES.WALK
-	player.animate()
+	player_input.movement_state = player_input.MOVEMENT_STATES.IDLE
 
 func process(delta: float):
 	if player_input.get_multiplayer_authority() == multiplayer.get_unique_id():
 		player_input.process_directional_input(delta)
 		player_input.process_controller_camera(delta)
 		player_input.interact(delta)
+		player.animate_interaction()
 	
 		if Input.is_action_just_pressed("jump"):
 			state_machine.state = "jumping"

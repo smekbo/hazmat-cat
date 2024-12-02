@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=3 uid="uid://c4y8qh42b7hww"]
 
 [ext_resource type="Script" path="res://scenes/level/test/level.gd" id="1_n7i08"]
-[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/test_box/test_box.tscn" id="2_3dsmc"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/props/test_box/test_box.tscn" id="2_3dsmc"]
 [ext_resource type="Script" path="res://scenes/level/spawnpoint.gd" id="3_4ju2y"]
 [ext_resource type="PackedScene" uid="uid://7jvwmpcr1ca1" path="res://scenes/player/assets/backrooms guy.blend" id="4_x8o4p"]
-[ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/tools/staple_gun/staple_gun.tscn" id="5_582vj"]
+[ext_resource type="PackedScene" uid="uid://nxn7djfuha0p" path="res://scenes/objects/tools/staple_gun/staple_gun.tscn" id="5_582vj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gt2em"]
 sky_top_color = Color(0, 0, 0, 1)

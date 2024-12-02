@@ -1,7 +1,7 @@
 extends Node
 class_name Main
 
-@export var current_level: NodePath = "res://scenes/level/test_gen/level.tscn"
+@export var current_level: NodePath = "res://scenes/level/movement_test/level.tscn"
 
 @onready var player_scene: PackedScene = load("res://scenes/player/player.tscn")
 @onready var players: Node = $Players

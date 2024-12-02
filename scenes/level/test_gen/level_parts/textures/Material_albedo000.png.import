@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lvpmi7ak35sy"
-path.s3tc="res://.godot/imported/greybox_grey_grid.png-c75c727ee08715d1e07f2d761d437c3f.s3tc.ctex"
+uid="uid://cnvegy52b5pf3"
+path.s3tc="res://.godot/imported/Material_albedo000.png-2cf30becd1cbecd8bfa44fa08c9cc1b4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/GreyboxTextures/greybox_grey_grid.png"
-dest_files=["res://.godot/imported/greybox_grey_grid.png-c75c727ee08715d1e07f2d761d437c3f.s3tc.ctex"]
+source_file="res://scenes/level/test_gen/level_parts/textures/Material_albedo000.png"
+dest_files=["res://.godot/imported/Material_albedo000.png-2cf30becd1cbecd8bfa44fa08c9cc1b4.s3tc.ctex"]
 
 [params]
 

@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://ygb3sifcrxje"]
+
+[ext_resource type="Script" path="res://scenes/objects/tools/ladder/ladder.gd" id="1_a1wut"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yi5u6"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrycv"]
+size = Vector3(5, 0.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fr4fu"]
+size = Vector3(1, 0.158386, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_khqug"]
+transparency = 1
+albedo_color = Color(0, 0.917647, 0.0784314, 0.490196)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jh46u"]
+material = SubResource("StandardMaterial3D_khqug")
+size = Vector3(5, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ct14"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_02xlg"]
+material = SubResource("StandardMaterial3D_1ct14")
+flip_faces = true
+size = Vector3(5, 0.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tihyu"]
+size = Vector3(1, 5.02686, 0.766968)
+
+[node name="Ladder" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_a1wut")
+type = 1
+carry = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_yi5u6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1.91069e-15, 0, 2.51725, -0.00242614)
+mesh = SubResource("BoxMesh_mrycv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.51725, 0.00242614)
+shape = SubResource("BoxShape3D_fr4fu")
+
+[node name="preview" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="preview"]
+transform = Transform3D(-4.37114e-08, 0, -1, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1.91069e-15, 0, 2.53093, 0)
+mesh = SubResource("BoxMesh_jh46u")
+skeleton = NodePath("../..")
+
+[node name="outline" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.5897e-08, 0, -1.05, 1.05, -4.5897e-08, -4.5897e-08, -4.5897e-08, -1.05, 2.00622e-15, 0, 2.51336, 0)
+visible = false
+mesh = SubResource("BoxMesh_02xlg")
+
+[node name="apply_ladder_physics" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="apply_ladder_physics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53735, 0.000549316)
+shape = SubResource("BoxShape3D_tihyu")
+
+[connection signal="body_entered" from="apply_ladder_physics" to="." method="_on_apply_ladder_physics_body_entered"]
+[connection signal="body_exited" from="apply_ladder_physics" to="." method="_on_apply_ladder_physics_body_exited"]
