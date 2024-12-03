@@ -3,13 +3,13 @@ The goal of the game is to cooperate to bring an item safely to the end of a lev
 ## The Item
 Should be able to take damage from being struck directly (by one of the traps, or accidentally by a player using a tool), or from falling to the ground. Most of the damage should be based on how hard the physical strike is. The damage should be visible on the item itself, as that will be the only way players can determine the integrity of the item until it is delivered. Breaking the item is the only game-over state
 ## The Player
-The player can walk, run, jump, grab ledges, crouch, dangle off ledges (by crouching near one) pick up objects, use tools, and dive
-The player can carry one object at a time, be it The Item, a tool, or just a physics prop
-The player can throw whatever they're holding with variable strength
-The player can survive most fall distances, but falling even a moderate distance will result in a stun and cause the player to drop anything they're carrying, posing a risk to The Item
+The player can walk, run, jump, grab ledges, crouch, dangle off ledges (by crouching near one) pick up objects, use tools, and dive.
+The player can carry one object at a time, be it The Item, a tool, or just a physics prop.
+The player can throw whatever they're holding with variable strength.
+The player can survive most fall distances, but falling even a moderate distance will result in a stun and cause the player to drop anything they're carrying, posing a risk to The Item.
 If the player dies, they will respawn after a short delay at the start of the room they died in, so long as the item is still intact
 ## Multiplayer Interaction
-Players can take items out of each others hands
+Players can take items out of each others hands.
 I'd like to add more direct interactions like that, but I think most of the cooperation will be from throwing items to each other, making pathways with tools, and catching The Item on the rebound should the current carrier get caught by a trap of some sort
 ## Tools
 This one still has a lot of things up in the air. 
@@ -28,9 +28,9 @@ Currently, level generation works as follows:
 ## Room Design
 Rooms should have two or more connection points. 
 If possible, and for the sake of gameplay variety, rooms should be challenging to traverse no matter what connection points are randomly selected as the entrance and exit. This is why fall damage is important, as that means climbing up and climbing down both present threats to the item.
-Though not currently supported I think it would be easy enough to make a room that has a pre-defined entrance or exit (maybe a room that presents a puzzle, or a choice of paths)
-Rooms can be any size
-Rooms should be fully enclosed
-Rooms should have pre-defined locations for traps to spawn, if desired
+Though not currently supported I think it would be easy enough to make a room that has a pre-defined entrance or exit (maybe a room that presents a puzzle, or a choice of paths).
+Rooms can be any size.
+Rooms should be fully enclosed.
+Rooms should have pre-defined locations for traps to spawn, if desired.
 ## Traps
-Similar to lethal company's traps, they can be randomly spawned in rooms at the time of generation. Traps should try to kill the player, but in a way that allows for the item to be thrown by the victim before succumbing , or allow a teammate to grab the item out of the victims hands before they're lost. If the player is killed suddenly, the item should have a physics impulse pop it into the air, both for comedic effect and to allow a teammate time to recover the item safely, potentially
+Similar to lethal company's traps, they can be randomly spawned in rooms at the time of generation. Traps should try to kill the player, but in a way that allows for the item to be thrown by the victim before succumbing, or allow a teammate to grab the item out of the victims hands before they're lost. If the player is killed suddenly, the item should have a physics impulse pop it into the air, both for comedic effect and to allow a teammate time to recover the item safely, potentially
