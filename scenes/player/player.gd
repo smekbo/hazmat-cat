@@ -1,14 +1,16 @@
 extends CharacterBody3D
 class_name Player
 
+signal falling
+var is_falling := false
+
 const DIRECTION_INTERPOLATE_SPEED = 1
 const MOTION_INTERPOLATE_SPEED = 10
 const ROTATION_INTERPOLATE_SPEED = 10
 
 const WALK_SPEED = 200
 const RUN_SPEED = 400
-const JUMP_SPEED = 6
-var airborne := false
+const JUMP_SPEED = 4
 
 var orientation = Transform3D()
 var root_motion = Transform3D()
@@ -26,6 +28,13 @@ var jump_motion: Vector3
 @export var overhead_carry_point: Node3D
 @export var front_carry_point: Node3D
 @export var camera_look_point: Node3D
+
+# ledge grab nodes
+@export var wall_detector: RayCast3D
+@export var open_ledge_detector: Area3D
+@export var ledge_floor_detector: RayCast3D
+var ledge_grab_position: Vector3
+var ledge_floor_position: Vector3
 
 @onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
@@ -74,7 +83,16 @@ func apply_input(delta: float):
 	set_velocity(velocity)
 	set_up_direction(Vector3.UP)
 	move_and_slide()
+	
+	# emit signal that transitions state machine to falling if y velocity is negative
+	if velocity.y < 0 and not is_falling:
+		falling.emit()
+		is_falling = true
 	_is_on_floor = is_on_floor()
+
+	if is_falling:
+		if is_on_floor():
+			is_falling = false
 
 	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
 	orientation = orientation.orthonormalized() # Orthonormalize orientation.
@@ -119,9 +137,8 @@ func apply_jump_velocity():
 	velocity.y = JUMP_SPEED
 
 
+# Show object outlines when we're able to interact with them
 func _on_interact_area_body_entered(body: GrabbableObject) -> void:
 	body.outline.show()
-
-
 func _on_interact_area_body_exited(body: GrabbableObject) -> void:
 	body.outline.hide()

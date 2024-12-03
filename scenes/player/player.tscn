@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scenes/player/state_machine/states/running.gd" id="5_foskt"]
 [ext_resource type="Script" path="res://scenes/player/state_machine/states/jumping.gd" id="6_jabkw"]
 [ext_resource type="Script" path="res://scenes/player/state_machine/states/airborne.gd" id="7_1hhv8"]
+[ext_resource type="Script" path="res://scenes/player/state_machine/states/ledge_grab.gd" id="7_avb1d"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_q12l1"]
 properties/0/path = NodePath(".:motion")
@@ -55,6 +56,8 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sy1gy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dub3b"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_htxmu"]
 animation = &"tail_idle"
@@ -176,21 +179,16 @@ node_connections = [&"TimeScale", 0, &"state", &"front_carry", 0, &"overhead_car
 height = 4.0
 radius = 0.75
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3row"]
-albedo_color = Color(0.509417, 1, 0.1965, 1)
-emission_enabled = true
-emission = Color(0.492522, 0.838383, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_e6ab0"]
-material = SubResource("StandardMaterial3D_w3row")
-
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("overhead_carry_point", "front_carry_point", "camera_look_point")]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("overhead_carry_point", "front_carry_point", "camera_look_point", "wall_detector", "open_ledge_detector", "ledge_floor_detector")]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_8fkf8")
 overhead_carry_point = NodePath("player_model/metarig/Skeleton3D/BoneAttachment3D/overhead_carry_point")
 front_carry_point = NodePath("player_model/metarig/Skeleton3D/BoneAttachment3D/front_carry_point")
 camera_look_point = NodePath("camera_base/camera_rot/SpringArm3D/Camera3D/camera_look_point")
+wall_detector = NodePath("player_model/ledge_grab_detectors/detect_wall")
+open_ledge_detector = NodePath("player_model/ledge_grab_detectors/detect_open_ledge")
+ledge_floor_detector = NodePath("player_model/ledge_grab_detectors/detect_open_ledge/detect_floor")
 
 [node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("player", "player_input")]
 script = ExtResource("3_6raky")
@@ -209,8 +207,11 @@ script = ExtResource("5_foskt")
 [node name="jumping" type="Node" parent="state_machine"]
 script = ExtResource("6_jabkw")
 
-[node name="airborne" type="Node" parent="state_machine"]
+[node name="falling" type="Node" parent="state_machine"]
 script = ExtResource("7_1hhv8")
+
+[node name="ledge_grab" type="Node" parent="state_machine"]
+script = ExtResource("7_avb1d")
 
 [node name="server_synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_q12l1")
@@ -231,7 +232,7 @@ shape = SubResource("CapsuleShape3D_sy1gy")
 [node name="player_model" parent="." instance=ExtResource("1_mna6d")]
 
 [node name="Skeleton3D" parent="player_model/metarig" index="0"]
-bones/1/position = Vector3(0, 1.01535, -0.0565858)
+bones/1/position = Vector3(0, 1.02198, -0.0565858)
 bones/1/rotation = Quaternion(0.12582, 0, 0, 0.992053)
 bones/2/rotation = Quaternion(-0.0644764, 0, 0, 0.997919)
 bones/3/rotation = Quaternion(-0.0774641, 0, 0, 0.996995)
@@ -239,14 +240,14 @@ bones/5/rotation = Quaternion(0.201738, 0, 0, 0.97944)
 bones/5/scale = Vector3(1, 1, 1)
 bones/8/position = Vector3(0.0187594, 0.140666, 0.0802155)
 bones/8/rotation = Quaternion(-0.550206, -0.405936, -0.388096, 0.617957)
-bones/9/rotation = Quaternion(-0.360074, 0.599593, -0.596362, 0.393938)
+bones/9/rotation = Quaternion(-0.356604, 0.602019, -0.593649, 0.397476)
 bones/10/rotation = Quaternion(0.0013857, -0.0681724, 0.0569785, 0.996044)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(0.00622383, 0.0324448, 0.023848, 0.99917)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/position = Vector3(-0.0187594, 0.140666, 0.0802155)
 bones/12/rotation = Quaternion(-0.550206, 0.405936, 0.388096, 0.617957)
-bones/13/rotation = Quaternion(-0.360074, -0.599593, 0.596362, 0.393938)
+bones/13/rotation = Quaternion(-0.356604, -0.602019, 0.593649, 0.397476)
 bones/14/rotation = Quaternion(0.0013857, 0.0681724, -0.0569785, 0.996044)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/rotation = Quaternion(0.00622383, -0.0324448, -0.023848, 0.99917)
@@ -257,17 +258,17 @@ bones/17/rotation = Quaternion(-0.152455, -0.793331, -0.285504, 0.515627)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
 bones/18/scale = Vector3(1, 1, 1)
-bones/19/rotation = Quaternion(0.976926, -0.0483899, 0.00607782, 0.207938)
+bones/19/rotation = Quaternion(0.976748, -0.0483991, 0.00605207, 0.208771)
 bones/19/scale = Vector3(1, 1, 1)
-bones/20/rotation = Quaternion(0.412685, -0.01419, -0.0710906, 0.907984)
-bones/21/rotation = Quaternion(-0.488438, 0.0487561, 0.0643716, 0.868854)
-bones/22/rotation = Quaternion(0.065199, 0.829289, -0.554888, -0.0113405)
+bones/20/rotation = Quaternion(0.399323, -0.0143068, -0.068884, 0.914107)
+bones/21/rotation = Quaternion(-0.467754, 0.0493678, 0.061584, 0.880328)
+bones/22/rotation = Quaternion(0.0645485, 0.824548, -0.562006, -0.010175)
 bones/22/scale = Vector3(1, 1, 1)
-bones/24/rotation = Quaternion(0.976926, 0.0483899, -0.00607782, 0.207938)
+bones/24/rotation = Quaternion(0.976748, 0.0483991, -0.00605207, 0.208771)
 bones/24/scale = Vector3(1, 1, 1)
-bones/25/rotation = Quaternion(0.412685, 0.01419, 0.0710906, 0.907984)
-bones/26/rotation = Quaternion(-0.488438, -0.0487561, -0.0643716, 0.868854)
-bones/27/rotation = Quaternion(-0.065199, 0.829289, -0.554888, 0.0113405)
+bones/25/rotation = Quaternion(0.399323, 0.0143068, 0.068884, 0.914107)
+bones/26/rotation = Quaternion(-0.467754, -0.0493678, -0.061584, 0.880328)
+bones/27/rotation = Quaternion(-0.0645485, 0.824548, -0.562006, 0.010175)
 bones/27/scale = Vector3(1, 1, 1)
 bones/29/rotation = Quaternion(-0.799126, -3.47149e-09, 0.00659616, 0.601127)
 bones/30/rotation = Quaternion(0.0142947, 1.91476e-09, -0.00411487, 0.999889)
@@ -282,7 +283,7 @@ bones/35/rotation = Quaternion(-5.4794e-08, 0.687939, 0.725769, -5.19379e-08)
 bones/36/rotation = Quaternion(5.4794e-08, 0.687939, 0.725769, 5.19379e-08)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="player_model/metarig/Skeleton3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.38419e-07, 0, 2.08616e-07, 1, 0, 1.80612, 0.0253201)
+transform = Transform3D(1, 0, 0, 0, 1, -2.38419e-07, 0, 2.08616e-07, 1, 0, 1.81274, 0.0253201)
 bone_name = "spine.006"
 bone_idx = 7
 
@@ -291,6 +292,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 7.45058e-08, 0, -1.19209e-07, 1, 0, 0.707
 
 [node name="front_carry_point" type="Marker3D" parent="player_model/metarig/Skeleton3D/BoneAttachment3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 7.45058e-08, 0, -1.19209e-07, 1, 0, -0.429029, 0.948882)
+
+[node name="ledge_grab_detectors" type="Node3D" parent="player_model"]
+
+[node name="detect_open_ledge" type="Area3D" parent="player_model/ledge_grab_detectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player_model/ledge_grab_detectors/detect_open_ledge"]
+shape = SubResource("SphereShape3D_dub3b")
+
+[node name="detect_floor" type="RayCast3D" parent="player_model/ledge_grab_detectors/detect_open_ledge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
+target_position = Vector3(0, -1.5, 0)
+
+[node name="detect_wall" type="RayCast3D" parent="player_model/ledge_grab_detectors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.332, 0)
+target_position = Vector3(0, 0, 1)
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../player_model")
@@ -366,12 +383,6 @@ modulate = Color(0.330239, 0.756528, 0, 1)
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 texture = ExtResource("4_yf4pf")
-
-[node name="debug_indicator" type="Marker3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="debug_indicator"]
-mesh = SubResource("SphereMesh_e6ab0")
 
 [connection signal="body_entered" from="camera_base/camera_rot/SpringArm3D/Camera3D/grab_area" to="." method="_on_interact_area_body_entered"]
 [connection signal="body_exited" from="camera_base/camera_rot/SpringArm3D/Camera3D/grab_area" to="." method="_on_interact_area_body_exited"]

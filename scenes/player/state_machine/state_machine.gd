@@ -12,18 +12,27 @@ var state_node: State
 		state = name
 		transition_to(name)
 
+
 func _ready() -> void:
 	state_node = get_node("idle")
+	player.falling.connect(on_player_falling)
+
+
+func on_player_falling():
+	state = "falling"
+
 
 func transition_to(state_name: String):
-	# print(state_name)
+	print(state_name)
 	state_node.exit()
 	state_node = get_node(state_name) # error handle DEEZ NUTS
 	state_node.enter()
 	state_changed.emit()
 
+
 func current_state() -> String:
 	return state
+
 
 func _process(delta: float) -> void:
 	state_node.process(delta)

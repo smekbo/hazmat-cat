@@ -11,9 +11,9 @@ func enter():
 func process(delta: float):
 	if multiplayer.is_server():
 		player.apply_input(delta)
-
-	state_machine.state = "airborne"
-
+		
+	# transition out of falling is handled by player 'falling' signal
+	#   connected in state machine ready function
 
 func input(event: InputEvent):
 	player_input.process_mouse_camera(event)
