@@ -2,8 +2,8 @@ extends State
 
 
 func enter():
-	player_input.speed = player.RUN_SPEED
-	player.animation_tree["parameters/state/transition_request"] = "run"
+	player.apply_jump_velocity()
+	player.animation_tree["parameters/state/transition_request"] = "dive"
 
 func exit():
 	pass
@@ -14,14 +14,8 @@ func process(delta: float):
 		player_input.process_controller_camera(delta)
 		player_input.interact(delta)
 	
-		if Input.is_action_just_released("run"):
-			state_machine.state = "walking"
-		if Input.is_action_just_pressed("jump"):
-			state_machine.state = "jumping"
-		if Input.is_action_just_pressed("crouch"):
-			state_machine.state = "diving"
-		if player_input.motion == Vector2.ZERO:
-			state_machine.state = "idle"
+	if player._is_on_floor:
+		state_machine.state = "idle"
 	
 	if multiplayer.is_server():
 		player.apply_input(delta)

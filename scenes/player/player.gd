@@ -23,6 +23,7 @@ var jump_motion: Vector3
 @onready var player_input: PlayerInput = $input_synchronizer
 @onready var animation_tree = $AnimationTree
 @onready var player_model = $player_model
+@onready var world_collision: CollisionShape3D = $CollisionShape3D
 @onready var state_machine: PlayerStateMachine = $state_machine
 
 @export var overhead_carry_point: Node3D
@@ -136,6 +137,8 @@ func animate_interaction():
 func apply_jump_velocity():
 	velocity.y = JUMP_SPEED
 
+func apply_ledge_jump_velocity():
+	velocity.y = 6.5
 
 # Show object outlines when we're able to interact with them
 func _on_interact_area_body_entered(body: GrabbableObject) -> void:

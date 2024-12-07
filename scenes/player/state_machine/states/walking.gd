@@ -19,6 +19,8 @@ func process(delta: float):
 			state_machine.state = "running"
 		if Input.is_action_just_pressed("jump"):
 			state_machine.state = "jumping"
+		if Input.is_action_just_pressed("crouch"):
+			state_machine.state = "crouching"
 		if player_input.motion == Vector2.ZERO:
 			state_machine.state = "idle"
 	
