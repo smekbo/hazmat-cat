@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://plqlswrdfh0v"]
+[gd_scene load_steps=18 format=3 uid="uid://plqlswrdfh0v"]
 
 [ext_resource type="Script" path="res://scenes/level/movement_test/level.gd" id="1_dplyp"]
 [ext_resource type="PackedScene" uid="uid://d25ustubecb51" path="res://scenes/level/spawn_point.tscn" id="2_15w8l"]
 [ext_resource type="Texture2D" uid="uid://bodn4gvvsrver" path="res://assets/GreyboxTextures/greybox_light_grid.png" id="3_od0oi"]
+[ext_resource type="PackedScene" uid="uid://duyp7e65gnie1" path="res://scenes/objects/props/test_box/test_box.tscn" id="4_wey7c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ennha"]
 
@@ -46,14 +47,6 @@ size = Vector3(12, 3, 12)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8fu5x"]
 points = PackedVector3Array(-6, -1.5, -6, -6, 1.5, -6, 6, -1.5, -6, -6, -1.5, 6, -6, 1.5, 6, 6, 1.5, -6, 6, -1.5, 6, 6, 1.5, 6)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qpu0"]
-albedo_color = Color(0.360472, 0.917215, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_7hune"]
-material = SubResource("StandardMaterial3D_2qpu0")
-radius = 0.25
-height = 0.5
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("spawn_points", "objects", "object_spawner")]
 script = ExtResource("1_dplyp")
@@ -163,6 +156,50 @@ mesh = SubResource("BoxMesh_uh6uv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-15"]
 shape = SubResource("ConvexPolygonShape3D_8fu5x")
 
-[node name="debug_ball" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, 0)
-mesh = SubResource("SphereMesh_7hune")
+[node name="platform-16" type="StaticBody3D" parent="geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 31.3484)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/platform-16"]
+mesh = SubResource("BoxMesh_uh6uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-16"]
+shape = SubResource("ConvexPolygonShape3D_8fu5x")
+
+[node name="platform-17" type="StaticBody3D" parent="geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 31)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/platform-17"]
+mesh = SubResource("BoxMesh_uh6uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-17"]
+shape = SubResource("ConvexPolygonShape3D_8fu5x")
+
+[node name="platform-18" type="StaticBody3D" parent="geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5, 31)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/platform-18"]
+mesh = SubResource("BoxMesh_uh6uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-18"]
+shape = SubResource("ConvexPolygonShape3D_8fu5x")
+
+[node name="platform-20" type="StaticBody3D" parent="geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 8, 31)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/platform-20"]
+mesh = SubResource("BoxMesh_uh6uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-20"]
+shape = SubResource("ConvexPolygonShape3D_8fu5x")
+
+[node name="platform-19" type="StaticBody3D" parent="geo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, 31)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geo/platform-19"]
+mesh = SubResource("BoxMesh_uh6uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geo/platform-19"]
+shape = SubResource("ConvexPolygonShape3D_8fu5x")
+
+[node name="TestBox" parent="." instance=ExtResource("4_wey7c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.46872, 1.48651, 1.96759)

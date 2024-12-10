@@ -24,6 +24,9 @@ func process(delta: float):
 		if player_input.motion == Vector2.ZERO:
 			state_machine.state = "idle"
 	
+		if player.is_falling:
+			state_machine.state = "falling"
+
 	if multiplayer.is_server():
 		player.apply_input(delta)
 

@@ -9,6 +9,15 @@ func enter():
 	player.animation_tree["parameters/jump/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 
 func process(delta: float):
+	if player_input.get_multiplayer_authority() == multiplayer.get_unique_id():
+		player_input.process_directional_input(delta)
+		player_input.process_controller_camera(delta)
+		player_input.interact(delta)
+		player.animate_interaction()
+	
+	if player.is_falling:
+		state_machine.state = "falling"
+
 	if multiplayer.is_server():
 		player.apply_input(delta)
 		
