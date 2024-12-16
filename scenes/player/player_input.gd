@@ -1,22 +1,27 @@
 extends MultiplayerSynchronizer
 class_name PlayerInput
 
+@onready var player: Player = $".."
+
+# CAMERA
 const CAMERA_CONTROLLER_ROTATION_SPEED := 3.0
 const CAMERA_MOUSE_ROTATION_SPEED := 0.002
 
 const CAMERA_X_ROT_MIN := deg_to_rad(-45)
 const CAMERA_X_ROT_MAX := deg_to_rad(45)
 
-@export var motion := Vector2()
-
 @export var camera_base : Node3D
 @export var camera_rot : Node3D
 @export var camera_camera : Camera3D
 @export var use_ray : RayCast3D
+
+# OBJECT GRABBING
 @export var grab_area : Area3D
+var held_object: GrabbableObject
+@export var throw_strength: float = 0
+var MAX_THROW_STRENGTH = 25
 
-@onready var player: Player = $".."
-
+# ANIMATION STATES
 enum MOVEMENT_STATES {IDLE, WALK, RUN, JUMP, FALL}
 enum INTERACTION_STATES {CARRYING, EMPTY}
 @export var movement_state : MOVEMENT_STATES = MOVEMENT_STATES.WALK :
@@ -34,11 +39,11 @@ enum INTERACTION_STATES {CARRYING, EMPTY}
 			held_object = null
 			grab_area.monitoring = true
 
-var held_object: GrabbableObject
-@export var throw_strength: float = 0
-var MAX_THROW_STRENGTH = 25
-
+# MOVEMENT
+@export var motion := Vector2()
+@export var jump_strength: float = 0
 @export var speed: float
+
 
 func _ready() -> void:
 	# Only run process and input if it's the actual player
@@ -48,6 +53,11 @@ func _ready() -> void:
 	else:
 		set_process(false)
 		set_process_input(false)
+
+
+@rpc("any_peer", "call_local")
+func jump_strength_used():
+	jump_strength = 0
 
 
 func process_directional_input(delta: float):

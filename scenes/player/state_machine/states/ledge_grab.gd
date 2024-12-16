@@ -14,7 +14,11 @@ func process(delta: float):
 		player.global_position = lerp(player.global_position, player.ledge_grab_position, 0.5)
 	
 	if Input.is_action_just_pressed("jump"):
-		state_machine.state = "ledge_grab_jump"
+		player.animation_tree["parameters/ledge_jump/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+
+
+func on_ledge_jump_animation_finished():
+	state_machine.state = "jumping"
 
 
 func input(event: InputEvent):

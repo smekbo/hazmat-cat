@@ -1,13 +1,13 @@
 extends State
 
-var min_airborne_timer
+var slide_timer
 
 func enter():
+	slide_timer = 0
 	player_input.speed = player.DIVE_SPEED
 	player.animation_tree["parameters/state/transition_request"] = "dive"
 	player.apply_dive_velocity()
 	player.body_collision(2)
-	min_airborne_timer = 0
 
 func exit():
 	player.body_collision(0)
@@ -20,7 +20,9 @@ func process(delta: float):
 		player.animate_interaction()
 	
 	if player._is_on_floor:
-		state_machine.state = "idle"
+		if slide_timer > 0.5:
+			state_machine.state = "idle"
+		slide_timer += delta
 	
 	if multiplayer.is_server():
 		player.apply_input(delta)
